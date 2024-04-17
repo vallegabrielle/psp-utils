@@ -1,17 +1,44 @@
 import axios from "axios"
 import * as cheerio from "cheerio"
 
-type ScraperProps = {
-  url: string
-}
-
 type ServiceInfo = {
   url: string
   image: string
   isExternalLink: boolean
 }[]
 
-export async function scraper({ url }: ScraperProps) {
+type Contents = {
+  title: string | null
+  description: string | null
+}[]
+
+type MergedObj = {
+  url: string
+  image: string
+  isExternalLink: boolean
+  title: string | null
+  description: string | null
+}[]
+
+async function getPageContent(url: string) {
+  try {
+    const res = await axios.get(url)
+
+    if (res.status !== 200) return
+
+    const html = res.data
+    const $ = cheerio.load(html)
+
+    const title = $("#content > header > h2").html()
+    const description = $("#content > header > h3").html()
+
+    return { title, description }
+  } catch (err) {
+    console.log("Error @ getPageContent:", err)
+  }
+}
+
+export async function scraper(url: string) {
   try {
     const res = await axios.get(url)
 
@@ -47,7 +74,29 @@ export async function scraper({ url }: ScraperProps) {
       })
     })
 
-    return serviceInfo
+    const contents: Contents = []
+
+    for (const info of serviceInfo) {
+      try {
+        const content = await getPageContent(info.url)
+        if (!content) return
+        contents.push(content)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+
+    const scraperRes = serviceInfo.map((obj, index) => {
+      const mergedObj: MergedObj[number] = { ...obj, ...contents[index] }
+      Object.keys(mergedObj).forEach(
+        (key) =>
+          mergedObj[key as keyof typeof mergedObj] === null &&
+          delete mergedObj[key as keyof typeof mergedObj]
+      )
+      return mergedObj
+    })
+
+    return scraperRes
   } catch (err) {
     console.log("Error @ scraper:", err)
   }

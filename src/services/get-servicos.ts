@@ -26,8 +26,8 @@ export async function getServicos(url: string) {
 
     const servicos: Servicos = []
 
-    $contentHtml(".col-md-6.col-xs-12").each((index, element) => {
-      const link = $(element).find("a").attr("href")
+    $contentHtml("a").each((index, element) => {
+      const link = $(element).attr("href")
 
       if (!link) return
 

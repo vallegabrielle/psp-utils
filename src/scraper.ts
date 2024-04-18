@@ -10,6 +10,8 @@ type ServiceInfo = {
 type Contents = {
   title: string | null
   description: string | null
+  time: string | null
+  content: string | null
 }[]
 
 type MergedObj = {
@@ -18,6 +20,8 @@ type MergedObj = {
   isExternalLink: boolean
   title: string | null
   description: string | null
+  time: string | null
+  content: string | null
 }[]
 
 async function getPageContent(url: string) {
@@ -31,8 +35,24 @@ async function getPageContent(url: string) {
 
     const title = $("#content > header > h2").html()
     const description = $("#content > header > h3").html()
+    const content = $("#content > div.post-text").html()
+    const timeString = $("time").text().trim()
 
-    return { title, description }
+    let formattedDate = null
+
+    if (timeString) {
+      const [time, date] = timeString.split(" ")
+      const [hour, minute] = time.split(":")
+      const [day, month, year] = date.split("/")
+
+      const dateObject = new Date(
+        `${year}-${month}-${day}T${hour}:${minute}:00Z`
+      )
+
+      formattedDate = dateObject.toISOString()
+    }
+
+    return { title, description, time: formattedDate, content }
   } catch (err) {
     console.log("Error @ getPageContent:", err)
   }

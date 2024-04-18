@@ -4,14 +4,12 @@ import * as cheerio from "cheerio"
 type Secretarias = {
   secretaria: string
   link: string
+  servicos?: string[]
 }[]
 
-export async function getSecretarias() {
+export async function getSecretarias(url: string) {
   try {
-    const homeSecretarias =
-      "https://www.prefeitura.sp.gov.br/cidade/secretarias/comunicacao/organizacao/index.php?p=192643"
-
-    const res = await axios.get(homeSecretarias)
+    const res = await axios.get(url)
 
     if (res.status !== 200) return
 

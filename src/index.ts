@@ -1,25 +1,11 @@
 import * as express from "express"
 import { Request, Response } from "express"
-import { scraper } from "@/scraper"
 import { getSecretarias } from "@/services/get-secretarias"
 import { getServicos } from "@/services/get-servicos"
 
 const app = express()
 
 app.get("/", async (req: Request, res: Response) => {
-  const url = req.query.site as string
-
-  const scraperRes = await scraper(url)
-
-  if (!scraperRes) {
-    res.status(404).send("SERVIÇOS section not found :(")
-    return
-  }
-
-  res.send(scraperRes)
-})
-
-app.get("/servicos", async (req: Request, res: Response) => {
   const url = req.query.site as string
 
   const secretarias = await getSecretarias(url)

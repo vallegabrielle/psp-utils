@@ -19,7 +19,7 @@ export async function getSecretarias(url: string) {
     const secretarias: Secretarias = []
 
     $("tbody tr td a").each((index, element) => {
-      const secretaria = $(element).text()
+      const secretaria = $(element).text().trim()
       const link = $(element).attr("href")
 
       if (!link) return

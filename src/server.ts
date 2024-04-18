@@ -6,24 +6,28 @@ import { getServicos } from "@/services/get-servicos"
 const app = express()
 
 app.get("/", async (req: Request, res: Response) => {
-  const url = req.query.site as string
+  try {
+    const url = req.query.site as string
 
-  const secretarias = await getSecretarias(url)
+    const secretarias = await getSecretarias(url)
 
-  if (!secretarias) {
-    res.status(404).send("Secretarias section not found :(")
-    return
+    if (!secretarias) {
+      res.status(404).send("Secretarias section not found :(")
+      return
+    }
+
+    for (const secretaria of secretarias) {
+      const servicos = await getServicos(secretaria.link)
+
+      if (!servicos) return
+
+      secretaria.servicos = servicos
+    }
+
+    res.send(secretarias)
+  } catch (error) {
+    res.status(500).send(error)
   }
-
-  for (const secretaria of secretarias) {
-    const servicos = await getServicos(secretaria.link)
-
-    if (!servicos) return
-
-    secretaria.servicos = servicos
-  }
-
-  res.send(secretarias)
 })
 
 const PORT = 3000

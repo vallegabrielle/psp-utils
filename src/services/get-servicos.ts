@@ -4,34 +4,38 @@ import * as cheerio from "cheerio"
 type Servicos = string[]
 
 export async function getServicos(url: string) {
-  const res = await axios.get(url)
+  try {
+    const res = await axios.get(url)
 
-  if (res.status !== 200) return
+    if (res.status !== 200) return
 
-  const html = res.data
-  const $ = cheerio.load(html)
+    const html = res.data
+    const $ = cheerio.load(html)
 
-  const hasServicos = $('h2:contains("SERVIÇOS")').html()
+    const hasServicos = $('h2:contains("SERVIÇOS")').html()
 
-  if (!hasServicos) return []
+    if (!hasServicos) return []
 
-  const content = $(
-    "div.panel.panel-default.panel-content.panel-notices"
-  ).html()
+    const content = $(
+      "div.panel.panel-default.panel-content.panel-notices"
+    ).html()
 
-  if (!content) return
+    if (!content) return
 
-  const $contentHtml = cheerio.load(content)
+    const $contentHtml = cheerio.load(content)
 
-  const servicos: Servicos = []
+    const servicos: Servicos = []
 
-  $contentHtml(".col-md-6.col-xs-12").each((index, element) => {
-    const link = $(element).find("a").attr("href")
+    $contentHtml(".col-md-6.col-xs-12").each((index, element) => {
+      const link = $(element).find("a").attr("href")
 
-    if (!link) return
+      if (!link) return
 
-    servicos.push(link)
-  })
+      servicos.push(link)
+    })
 
-  return servicos
+    return servicos
+  } catch (error) {
+    console.log("Error @ getServicos", error)
+  }
 }

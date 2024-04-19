@@ -1,8 +1,6 @@
 import axios from "axios"
 import * as cheerio from "cheerio"
 
-type Servicos = string[]
-
 export async function getServicos(url: string) {
   try {
     const res = await axios.get(url)
@@ -24,7 +22,7 @@ export async function getServicos(url: string) {
 
     const $contentHtml = cheerio.load(content)
 
-    const servicos: Servicos = []
+    const servicos: string[] = []
 
     $contentHtml("a").each((index, element) => {
       const link = $(element).attr("href")

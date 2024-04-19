@@ -1,10 +1,11 @@
 import axios from "axios"
 import * as cheerio from "cheerio"
+import { Servicos } from "@/services/get-servicos"
 
 type Secretarias = {
   secretaria: string
-  link: string
-  servicos?: string[]
+  url: string
+  servicos?: Servicos
 }[]
 
 export async function getSecretarias(url: string) {
@@ -20,13 +21,13 @@ export async function getSecretarias(url: string) {
 
     $("tbody tr td a").each((index, element) => {
       const secretaria = $(element).text().trim()
-      const link = $(element).attr("href")
+      const url = $(element).attr("href")
 
-      if (!link) return
+      if (!url) return
 
       secretarias.push({
         secretaria,
-        link,
+        url,
       })
     })
 

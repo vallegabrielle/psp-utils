@@ -19,7 +19,7 @@ app.get("/", async (req: Request, res: Response) => {
     }
 
     for (const secretaria of secretarias) {
-      const servicos = await getServicos(secretaria.link)
+      const servicos = await getServicos(secretaria.url)
 
       if (!servicos) return
 

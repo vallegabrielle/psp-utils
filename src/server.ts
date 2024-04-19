@@ -3,6 +3,8 @@ import { Request, Response } from "express"
 import { getSecretarias } from "@/services/get-secretarias"
 import { getServicos } from "@/services/get-servicos"
 
+const PORT = 3000
+
 const app = express()
 
 app.get("/", async (req: Request, res: Response) => {
@@ -12,7 +14,7 @@ app.get("/", async (req: Request, res: Response) => {
     const secretarias = await getSecretarias(url)
 
     if (!secretarias) {
-      res.status(404).send("Secretarias section not found :(")
+      res.status(404).send("Section not found")
       return
     }
 
@@ -29,7 +31,5 @@ app.get("/", async (req: Request, res: Response) => {
     res.status(500).send(error)
   }
 })
-
-const PORT = 3000
 
 app.listen(PORT, () => console.log(`🌐 Server is running on port ${PORT}`))

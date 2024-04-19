@@ -44,12 +44,18 @@ A requisição irá retornar uma resposta da seguinte forma:
 [
    {
       "secretaria": "Casa Civil",
-      "link": "https://www.prefeitura.sp.gov.br/cidade/secretarias/casa_civil/",
+      "url": "https://www.prefeitura.sp.gov.br/cidade/secretarias/casa_civil/",
       "servicos": [
-         "http://transparencia.prefeitura.sp.gov.br/funcionalismo/",
-         "https://diariooficial.prefeitura.sp.gov.br/md_epubli_controlador.php?acao=inicio",
-         "https://orcamento.sf.prefeitura.sp.gov.br/orcamento/index.php",
-         "https://www.prefeitura.sp.gov.br/cidade/secretarias/governo/utilidade_publica/index.php?p=450"
+         {
+            "url": "http://transparencia.prefeitura.sp.gov.br/funcionalismo/",
+            "img": {
+               "src": "https://www.prefeitura.sp.gov.br/cidade/secretarias/upload/chamadas/whatsapp_image_2023-04-28_at_12_1682706045.51",
+               "alt": "Fundo azul com imagem transparente, à frente os dizeres Portal da Transparência e logo da Prefeitura de São Paulo acima"
+            },
+            "titulo": "FUNCIONALISMO",
+            "descricao": "Página com dados sobre os funcionários da Prefeitura extraídos do SIGPEC (Sistema Integrado de Gestão de Pessoas e Competências) e que têm como referência o mês anterior ao corrente"
+         },
+         ...
       ]
    },
    ...
@@ -59,8 +65,14 @@ A requisição irá retornar uma resposta da seguinte forma:
 Em que:
 
 - `secretaria`: Título da secretaria
-- `link`: Link para home da secretaria
-- `servicos`: Array com os links para os serviços da secretaria
+- `url`: Link para a home da secretaria
+- `servicos`: Array com informações sobre cada serviço da secretaria
+- `servicos.url`: Link para a página do serviço
+- `servicos.img`: Objeto com informações da imagem
+- `servicos.img.src`: Link da imagem
+- `servicos.img.alt`: Texto alternativo da imagem
+- `servicos.titulo`: Título do serviço
+- `servicos.descricao`: Descrição do serviço
 
 ## Contribuição
 

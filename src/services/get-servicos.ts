@@ -1,6 +1,16 @@
 import axios from "axios"
 import * as cheerio from "cheerio"
 
+export type Servicos = {
+  url: string
+  img: {
+    src: string
+    alt: string
+  }
+  titulo: string
+  descricao: string
+}[]
+
 export async function getServicos(url: string) {
   try {
     const res = await axios.get(url)
@@ -22,14 +32,26 @@ export async function getServicos(url: string) {
 
     const $contentHtml = cheerio.load(content)
 
-    const servicos: string[] = []
+    const servicos: Servicos = []
 
     $contentHtml("a").each((index, element) => {
-      const link = $(element).attr("href")
+      const url = $(element).attr("href")
+      const imgSrc = $(element).find("img").attr("src")
+      const imgAlt = $(element).find("img").attr("alt")
+      const titulo = $(element).find("h3").text().trim()
+      const descricao = $(element).find("p").text().trim()
 
-      if (!link) return
+      if (!url) return
 
-      servicos.push(link)
+      servicos.push({
+        url,
+        img: {
+          src: imgSrc || "",
+          alt: imgAlt || "",
+        },
+        titulo,
+        descricao,
+      })
     })
 
     return servicos

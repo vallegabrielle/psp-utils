@@ -1,0 +1,38 @@
+[
+  {
+    "tag": "item de carrossel - cejur - cejur para todos - séries especiais",
+    "i": "294 - Procuradoria Geral do Município | Séries Especiais",
+    "href": "https://www.prefeitura.sp.gov.br/cidade/secretarias/procuradoria_geral/cejur/cejur_para_todos/series_especiais/index.php",
+    "imgSrc": "https://www.prefeitura.sp.gov.br/cidade/secretarias/upload/chamadas/SE_rotativo_1646327044.png",
+    "imgAlt": "Fundo azul escuro, linha vertical branca fina à esquerda, título \"Séries especiais\" e logo do CEJUR no canto superior direito.",
+    "h2Text": "",
+    "pText": ""
+  },
+  {
+    "tag": "item de carrossel - departamento de desapropriações",
+    "i": "314 - Procuradoria Geral do Município | Departamento de Desapropriações",
+    "href": "http://www.prefeitura.sp.gov.br/cidade/secretarias/procuradoria_geral/departamento_de_desapropriacoes/index.php?p=207689",
+    "imgSrc": "https://www.prefeitura.sp.gov.br/cidade/secretarias/upload/chamadas/template_desap_1450790404_1513623047.jpg",
+    "imgAlt": "Foto tirada da Ponte Octávio Frias de Oliveira (Ponte Estaiada) cruzando o Rio Pinheiros.",
+    "h2Text": "Departamento de Desapropriações",
+    "pText": "O Departamento de Desapropriações tem atribuições de representar o Município em todos os juízos e instâncias, nas ações e feitos relativos a desapropriações contenciosas e amigáveis, bem como nos respectivos atos de tabelionato;"
+  },
+  {
+    "tag": "item de carrossel - departamento fiscal",
+    "i": "315 - Procuradoria Geral do Município | Departamento Fiscal",
+    "href": "http://www.prefeitura.sp.gov.br/cidade/secretarias/procuradoria_geral/departamento_fiscal/index.php?p=346",
+    "imgSrc": "https://www.prefeitura.sp.gov.br/cidade/secretarias/upload/chamadas/Imagem Fisc_1523975992.jpg",
+    "imgAlt": "Imagem com edifício branco no centro e outros edifícios ao fundo e árvores na frente e ao lado",
+    "h2Text": "Departamento Fiscal",
+    "pText": "O Departamento Fiscal tem as atribuições de promover a inscrição e a cobrança da dívida ativa do Município, defender os interesses do Município nas ações e processos de qualquer natureza."
+  },
+  {
+    "tag": "item de carrossel - dep. de procedimentos disciplinares",
+    "i": "317 - Procuradoria Geral do Município | Dep. de Procedimentos Disciplinares",
+    "href": "https://www.prefeitura.sp.gov.br/cidade/secretarias/procuradoria_geral/duvidas/index.php?p=207697",
+    "imgSrc": "https://www.prefeitura.sp.gov.br/cidade/secretarias/upload/chamadas/template_proced_1450790328_1523633293.png",
+    "imgAlt": "Imagem de uma praça com árvores ao redor e prédios ao fundo.",
+    "h2Text": "Departamento de Procedimentos Disciplinares",
+    "pText": "O Departamento de Procedimentos Disciplinares tem as atribuições de representar o Município em todos os juízos e instâncias nas ações judiciais preparatórias, incidentais, de produção de provas ou cautelares que envolvam questões disciplinares."
+  }
+]

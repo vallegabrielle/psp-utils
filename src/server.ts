@@ -3,7 +3,8 @@ import { Request, Response } from "express"
 import { getSecretarias } from "@/services/get-secretarias"
 import { getServicos } from "@/services/get-servicos"
 import { hasCarrossel } from "@/services/has-carrossel"
-import * as sites from "@/sites.json"
+import { getCarrossel } from "@/services/get-carrossel"
+import * as sites from "@/json/sites.json"
 
 const PORT = 3000
 
@@ -34,7 +35,7 @@ app.get("/", async (req: Request, res: Response) => {
   }
 })
 
-app.get("/carrossel", async (req: Request, res: Response) => {
+app.get("/has-carrossel", async (req: Request, res: Response) => {
   try {
     const targetDivPrefeitura = "#carouselContent"
     const targetDivAtual = ".lfr-layout-structure-item-itens-de-carrossel"
@@ -64,6 +65,18 @@ app.get("/carrossel", async (req: Request, res: Response) => {
     }
 
     res.send(checkArr)
+  } catch (error) {
+    res.status(500).send(error)
+  }
+})
+
+app.get("/get-carrossel-info", async (req: Request, res: Response) => {
+  try {
+    const url = req.query.site as string
+
+    const carrossel = await getCarrossel(url)
+
+    res.send(carrossel)
   } catch (error) {
     res.status(500).send(error)
   }

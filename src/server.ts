@@ -2,6 +2,8 @@ import * as express from "express"
 import { Request, Response } from "express"
 import { getSecretarias } from "@/services/get-secretarias"
 import { getServicos } from "@/services/get-servicos"
+import { hasCarrossel } from "@/services/has-carrossel"
+import * as sites from "@/sites.json"
 
 const PORT = 3000
 
@@ -27,6 +29,41 @@ app.get("/", async (req: Request, res: Response) => {
     }
 
     res.send(secretarias)
+  } catch (error) {
+    res.status(500).send(error)
+  }
+})
+
+app.get("/carrossel", async (req: Request, res: Response) => {
+  try {
+    const targetDivPrefeitura = "#carouselContent"
+    const targetDivAtual = ".lfr-layout-structure-item-itens-de-carrossel"
+
+    const checkArr = []
+    for (const [i, site] of sites.entries()) {
+      const current = i + 1
+
+      console.log(current, "/", sites.length)
+      const temCarrosselNaPrefeitura = await hasCarrossel(
+        site.urlPrefeitura,
+        targetDivPrefeitura
+      )
+      const temCarrosselNoAtual = await hasCarrossel(
+        site.urlAtual,
+        targetDivAtual
+      )
+
+      checkArr.push({
+        id: current,
+        infoDaPagina: `${site.site} - ${site.pagina}`,
+        temCarrosselNaPrefeitura,
+        temCarrosselNoAtual,
+        temNaPrefeituraMasNaoTemNoAtual:
+          temCarrosselNaPrefeitura && !temCarrosselNoAtual,
+      })
+    }
+
+    res.send(checkArr)
   } catch (error) {
     res.status(500).send(error)
   }

@@ -2,11 +2,12 @@ import axios from "axios"
 import * as cheerio from "cheerio"
 
 type Carousel = {
+  id: number
   href: string | undefined
   imgSrc: string | undefined
   imgAlt: string | undefined
-  h2Text: string | undefined
-  pText: string | undefined
+  titulo: string | undefined
+  descricao: string | undefined
 }[]
 
 export async function getCarrossel(url: string) {
@@ -34,11 +35,12 @@ export async function getCarrossel(url: string) {
       const pText = $(element).find("p").text().trim()
 
       carousel.push({
+        id: index + 1,
         href,
         imgSrc,
         imgAlt,
-        h2Text,
-        pText,
+        titulo: h2Text,
+        descricao: pText,
       })
     })
 

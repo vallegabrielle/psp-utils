@@ -4,6 +4,7 @@ import { getSecretarias } from "@/services/get-secretarias"
 import { getServicos } from "@/services/get-servicos"
 import { hasCarrossel } from "@/services/has-carrossel"
 import { getCarrossel } from "@/services/get-carrossel"
+import { uploadImages } from "@/services/upload-images"
 import * as sites from "@/json/sites.json"
 
 const PORT = 3000
@@ -77,6 +78,37 @@ app.get("/get-carrossel-info", async (req: Request, res: Response) => {
     const carrossel = await getCarrossel(url)
 
     res.send(carrossel)
+  } catch (error) {
+    res.status(500).send(error)
+  }
+})
+
+app.get("/get-servicos-info", async (req: Request, res: Response) => {
+  try {
+    const url = req.query.site as string
+
+    const servicos = await getServicos(url)
+
+    res.send(servicos)
+  } catch (error) {
+    res.status(500).send(error)
+  }
+})
+
+app.get("/upload-images", async (req: Request, res: Response) => {
+  try {
+    const url = req.query.site as string
+
+    const carrossel = await getCarrossel(url)
+
+    if (!carrossel) return
+
+    const imageSources = carrossel.map((item) => item.imgSrc || "")
+    const parentFolderId = ""
+
+    await uploadImages(imageSources, parentFolderId)
+
+    res.send("Images uploaded successfully")
   } catch (error) {
     res.status(500).send(error)
   }

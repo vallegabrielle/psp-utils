@@ -95,18 +95,41 @@ app.get("/get-servicos-info", async (req: Request, res: Response) => {
   }
 })
 
-app.get("/upload-images", async (req: Request, res: Response) => {
+app.get("/upload-carrossel-images", async (req: Request, res: Response) => {
   try {
     const url = req.query.site as string
+    const parentFolderId = req.query.folderId as string
+    const login = req.query.login as string
+    const password = req.query.password as string
 
     const carrossel = await getCarrossel(url)
 
     if (!carrossel) return
 
     const imageSources = carrossel.map((item) => item.imgSrc || "")
-    const parentFolderId = ""
 
-    await uploadImages(imageSources, parentFolderId)
+    await uploadImages(imageSources, parentFolderId, login, password)
+
+    res.send("Images uploaded successfully")
+  } catch (error) {
+    res.status(500).send(error)
+  }
+})
+
+app.get("/upload-servicos-images", async (req: Request, res: Response) => {
+  try {
+    const url = req.query.site as string
+    const parentFolderId = req.query.folderId as string
+    const login = req.query.login as string
+    const password = req.query.password as string
+
+    const servicos = await getServicos(url)
+
+    if (!servicos) return
+
+    const imageSources = servicos.map((item) => item.img.src || "")
+
+    await uploadImages(imageSources, parentFolderId, login, password)
 
     res.send("Images uploaded successfully")
   } catch (error) {

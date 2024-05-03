@@ -4,12 +4,14 @@ async function getFile(url: string) {
   return fileBLOB
 }
 
-async function postFile(file: Blob, parentFolderId: string) {
+async function postFile(
+  file: Blob,
+  parentFolderId: string,
+  login: string,
+  password: string
+) {
   const formData = new FormData()
   formData.append("file", file, "img_" + Math.random())
-
-  const login = ""
-  const password = ""
 
   const response = await fetch(
     `https://webserver-prefeiturasp-prd.lfr.cloud/o/headless-delivery/v1.0/document-folders/${parentFolderId}/documents`,
@@ -27,7 +29,9 @@ async function postFile(file: Blob, parentFolderId: string) {
 
 export async function uploadImages(
   imageSources: string[],
-  parentFolderId: string
+  parentFolderId: string,
+  login: string,
+  password: string
 ) {
   for (let i = 0; i < imageSources.length; i++) {
     const file = imageSources[i]
@@ -37,7 +41,7 @@ export async function uploadImages(
     const fileBLOB = await getFile(file)
 
     if (fileBLOB) {
-      await postFile(fileBLOB, parentFolderId)
+      await postFile(fileBLOB, parentFolderId, login, password)
     }
   }
 }

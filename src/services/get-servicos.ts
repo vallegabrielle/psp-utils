@@ -2,6 +2,7 @@ import axios from "axios"
 import * as cheerio from "cheerio"
 
 export type Servicos = {
+  id: number
   url: string
   img: {
     src: string
@@ -44,6 +45,7 @@ export async function getServicos(url: string) {
       if (!url) return
 
       servicos.push({
+        id: index + 1,
         url,
         img: {
           src: imgSrc || "",

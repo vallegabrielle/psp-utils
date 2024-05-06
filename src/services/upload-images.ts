@@ -38,6 +38,8 @@ export async function uploadImages(
 
     console.log(`Processando imagem ${i + 1} de ${imageSources.length}`)
 
+    if (file === "") continue
+
     const fileBLOB = await getFile(file)
 
     if (fileBLOB) {

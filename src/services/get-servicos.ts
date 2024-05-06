@@ -42,11 +42,10 @@ export async function getServicos(url: string) {
       const titulo = $(element).find("h3").text().trim()
       const descricao = $(element).find("p").text().trim()
 
-      if (!url) return
 
       servicos.push({
         id: index + 1,
-        url,
+        url: url || "",
         img: {
           src: imgSrc || "",
           alt: imgAlt || "",

@@ -11,7 +11,7 @@ const PORT = 3000
 
 const app = express()
 
-app.get("/", async (req: Request, res: Response) => {
+app.get("/list-servicos-from-all-secretarias", async (req: Request, res: Response) => {
   try {
     const url = req.query.site as string
 

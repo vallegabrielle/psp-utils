@@ -1,21 +1,21 @@
-# Services List
+# PSP Utils
 
 ## Descrição
 
-Web scraper que lista os serviços de cada secretaria.
+Serviços utilitários para atividades da PSP.
 
 ## Instalação
 
 1. Clone este repositório:
 
    ```bash
-   git clone https://github.com/phmachado/services-list.git
+   git clone https://github.com/phmachado/psp-utils.git
    ```
 
 2. Navegue até o diretório do projeto:
 
    ```bash
-   cd services-list
+   cd psp-utils
    ```
 
 3. Instale as dependências:
@@ -30,7 +30,9 @@ Web scraper que lista os serviços de cada secretaria.
    yarn start
    ```
 
-## Uso
+## Usos
+
+### 1. Listagem de serviços
 
 Para gerar o JSON com a lista de serviços, é necessário fazer uma requisição GET para `localhost:3000/?site={URL}`
 

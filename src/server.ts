@@ -5,36 +5,42 @@ import { getServicos } from "@/services/get-servicos"
 import { hasCarrossel } from "@/services/has-carrossel"
 import { getCarrossel } from "@/services/get-carrossel"
 import { uploadImages } from "@/services/upload-images"
+import { getCardsInfo } from "@/services/get-cards-info"
 import * as sites from "@/json/sites.json"
+import * as fs from "fs"
+import * as cards from "@/json/cards.json"
 
 const PORT = 3000
 
 const app = express()
 
-app.get("/list-servicos-from-all-secretarias", async (req: Request, res: Response) => {
-  try {
-    const url = req.query.site as string
+app.get(
+  "/list-servicos-from-all-secretarias",
+  async (req: Request, res: Response) => {
+    try {
+      const url = req.query.site as string
 
-    const secretarias = await getSecretarias(url)
+      const secretarias = await getSecretarias(url)
 
-    if (!secretarias) {
-      res.status(404).send("Section not found")
-      return
+      if (!secretarias) {
+        res.status(404).send("Section not found")
+        return
+      }
+
+      for (const secretaria of secretarias) {
+        const servicos = await getServicos(secretaria.url)
+
+        if (!servicos) return
+
+        secretaria.servicos = servicos
+      }
+
+      res.send(secretarias)
+    } catch (error) {
+      res.status(500).send(error)
     }
-
-    for (const secretaria of secretarias) {
-      const servicos = await getServicos(secretaria.url)
-
-      if (!servicos) return
-
-      secretaria.servicos = servicos
-    }
-
-    res.send(secretarias)
-  } catch (error) {
-    res.status(500).send(error)
   }
-})
+)
 
 app.get("/has-carrossel", async (req: Request, res: Response) => {
   try {
@@ -132,6 +138,59 @@ app.get("/upload-servicos-images", async (req: Request, res: Response) => {
     await uploadImages(imageSources, parentFolderId, login, password)
 
     res.send("Images uploaded successfully")
+  } catch (error) {
+    res.status(500).send(error)
+  }
+})
+
+app.get("/get-card-info", async (req: Request, res: Response) => {
+  try {
+    const url = req.query.site as string
+
+    const cardsInfo = await getCardsInfo(url)
+
+    if (!cardsInfo) return
+
+    const queries = cardsInfo.map((item) => item.query)
+
+    const content = queries.join("\n")
+
+    fs.writeFileSync("./a.txt", content)
+
+    res.send(queries)
+  } catch (error) {
+    res.status(500).send(error)
+  }
+})
+
+app.get("/get-cards-info", async (req: Request, res: Response) => {
+  try {
+    const queriesArr: (string | undefined)[] = []
+
+    for (const card of cards) {
+      const cardsInfo = await getCardsInfo(card)
+
+      if (!cardsInfo) return
+
+      const queries = cardsInfo.map((item) => item.query)
+
+      queriesArr.push(...queries)
+
+      // const content = queries.join("\n")
+      // const fileName = card.split("secretarias/")[1].replace(/\//g, "-")
+      // const filePath = `./queries/${fileName}.txt`
+
+      // fs.writeFileSync(filePath, content)
+
+      console.log(card, "done")
+    }
+
+    const filePath = `./queries.txt`
+    const content = queriesArr.join("\n")
+
+    fs.writeFileSync(filePath, content)
+
+    res.send("Files created successfully")
   } catch (error) {
     res.status(500).send(error)
   }

@@ -46,6 +46,6 @@ export async function getCarrossel(url: string) {
 
     return carousel
   } catch (error) {
-    console.log("Error @ getSecretarias:", error)
+    console.log("Error @ getCarrossel:", error)
   }
 }

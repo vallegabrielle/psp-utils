@@ -19,6 +19,6 @@ export async function hasCarrossel(url: string, target: string) {
       return false
     }
   } catch (error) {
-    console.log("Error @ getSecretarias:", error)
+    console.log("Error @ hasCarrossel:", error)
   }
 }

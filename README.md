@@ -32,6 +32,14 @@ Serviços utilitários para atividades da PSP.
 
 ## Usos
 
+- [Listagem de serviços por secretaria](#1-listagem-de-serviços-por-secretaria)
+- [Verificar se existe carrossel no site da PSP mas ainda não no atual](#2-verificar-se-existe-carrossel-no-site-da-psp-mas-ainda-não-no-atual)
+- [Listar informações sobre os serviços de uma página](#3-listar-informações-sobre-os-serviços-de-uma-página)
+- [Listar informações sobre os carrosséis de uma página](#4-listar-informações-sobre-os-carrosséis-de-uma-página)
+- [Fazer upload das imagens dos serviços de uma página](#5-fazer-upload-das-imagens-dos-serviços-de-uma-página)
+- [Fazer upload das imagens dos carrosséis de uma página](#6-fazer-upload-das-imagens-dos-carrosséis-de-uma-página)
+- [Gerar arquivo txt com queries para atualizar informações sobre os cards](#7-gerar-arquivo-txt-com-queries-para-atualizar-informações-sobre-os-cards)
+
 ### 1. Listagem de serviços por secretaria
 
 Fazer uma requisição GET para `localhost:3000/list-servicos-from-all-secretarias?site={URL}`
@@ -129,7 +137,7 @@ Fazer uma requisição POST para `http://localhost:3000/upload-servicos-images?s
 
 - `{SITE}`: URL da página que contém os serviços
 - `{FOLDER_ID}`: ID da pasta em que as imagens serão salvas no 'Documentos e Mídia'
-  - Para encontrar o ID, é necessário verificar a URL da pasta e procurar pelo query param que termina com `_folderId`
+  - Para encontrar o ID, é necessário verificar a URL da pasta e procurar pelo query param que termina com `_folderId` (usar o [freeformatter](https://www.freeformatter.com/url-parser-query-string-splitter.html) pode facilitar essa procura)
 - `{LOGIN}`: Login de acesso ao portal
 - `{SENHA}`: Senha de acesso ao portal
 
@@ -141,7 +149,7 @@ Fazer uma requisição POST para `http://localhost:3000/upload-carrossel-images?
 
 - `{SITE}`: URL da página que contém os carrosséis
 - `{FOLDER_ID}`: ID da pasta em que as imagens serão salvas no 'Documentos e Mídia'
-  - Para encontrar o ID, é necessário verificar a URL da pasta e procurar pelo query param que termina com `_folderId`
+  - Para encontrar o ID, é necessário verificar a URL da pasta e procurar pelo query param que termina com `_folderId` (usar o [freeformatter](https://www.freeformatter.com/url-parser-query-string-splitter.html) pode facilitar essa procura)
 - `{LOGIN}`: Login de acesso ao portal
 - `{SENHA}`: Senha de acesso ao portal
 

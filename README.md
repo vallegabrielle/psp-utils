@@ -44,6 +44,8 @@ Serviços utilitários para atividades da PSP.
 
 Fazer uma requisição GET para `localhost:3000/list-servicos-from-all-secretarias?site={URL}`
 
+- `{URL}`: URL da página que contém a lista com todas as secretarias
+
 A requisição irá retornar uma resposta da seguinte forma:
 
 ```bash
@@ -93,6 +95,8 @@ A requisição irá retornar uma resposta da seguinte forma:
 
 Fazer uma requisição GET para `localhost:3000/get-carrossel-info?site={URL}`
 
+- `{URL}`: URL da página que contém os carrosséis
+
 A requisição irá retornar uma resposta da seguinte forma:
 
 ```bash
@@ -112,6 +116,8 @@ A requisição irá retornar uma resposta da seguinte forma:
 ### 4. Listar informações sobre os carrosséis de uma página
 
 Fazer uma requisição GET para `localhost:3000/get-servicos-info?site={URL}`
+
+- `{URL}`: URL da página que contém os serviços
 
 A requisição irá retornar uma resposta da seguinte forma:
 
@@ -133,9 +139,9 @@ A requisição irá retornar uma resposta da seguinte forma:
 
 ### 5. Fazer upload das imagens dos serviços de uma página
 
-Fazer uma requisição POST para `http://localhost:3000/upload-servicos-images?site={SITE}&folderId={FOLDER_ID}&login={LOGIN}&password={SENHA}`
+Fazer uma requisição POST para `http://localhost:3000/upload-servicos-images?site={URL}&folderId={FOLDER_ID}&login={LOGIN}&password={SENHA}`
 
-- `{SITE}`: URL da página que contém os serviços
+- `{URL}`: URL da página que contém os serviços
 - `{FOLDER_ID}`: ID da pasta em que as imagens serão salvas no 'Documentos e Mídia'
   - Para encontrar o ID, é necessário verificar a URL da pasta e procurar pelo query param que termina com `_folderId` (usar o [freeformatter](https://www.freeformatter.com/url-parser-query-string-splitter.html) pode facilitar essa procura)
 - `{LOGIN}`: Login de acesso ao portal
@@ -145,9 +151,9 @@ A requisição irá retornar uma reposta da seguinte forma: `"Images uploaded su
 
 ### 6. Fazer upload das imagens dos carrosséis de uma página
 
-Fazer uma requisição POST para `http://localhost:3000/upload-carrossel-images?site={SITE}&folderId={FOLDER_ID}&login={LOGIN}&password={SENHA}`
+Fazer uma requisição POST para `http://localhost:3000/upload-carrossel-images?site={URL}&folderId={FOLDER_ID}&login={LOGIN}&password={SENHA}`
 
-- `{SITE}`: URL da página que contém os carrosséis
+- `{URL}`: URL da página que contém os carrosséis
 - `{FOLDER_ID}`: ID da pasta em que as imagens serão salvas no 'Documentos e Mídia'
   - Para encontrar o ID, é necessário verificar a URL da pasta e procurar pelo query param que termina com `_folderId` (usar o [freeformatter](https://www.freeformatter.com/url-parser-query-string-splitter.html) pode facilitar essa procura)
 - `{LOGIN}`: Login de acesso ao portal

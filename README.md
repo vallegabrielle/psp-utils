@@ -125,7 +125,7 @@ A requisição irá retornar uma resposta da seguinte forma:
 
 ### 5. Fazer upload das imagens dos serviços de uma página
 
-Fazer uma requisição GET para `http://localhost:3000/upload-servicos-images?site={SITE}&folderId={FOLDER_ID}&login={LOGIN}&password={SENHA}`
+Fazer uma requisição POST para `http://localhost:3000/upload-servicos-images?site={SITE}&folderId={FOLDER_ID}&login={LOGIN}&password={SENHA}`
 
 - `{SITE}`: URL da página que contém os serviços
 - `{FOLDER_ID}`: ID da pasta em que as imagens serão salvas no 'Documentos e Mídia'
@@ -137,7 +137,7 @@ A requisição irá retornar uma reposta da seguinte forma: `"Images uploaded su
 
 ### 6. Fazer upload das imagens dos carrosséis de uma página
 
-Fazer uma requisição GET para `http://localhost:3000/upload-carrossel-images?site={SITE}&folderId={FOLDER_ID}&login={LOGIN}&password={SENHA}`
+Fazer uma requisição POST para `http://localhost:3000/upload-carrossel-images?site={SITE}&folderId={FOLDER_ID}&login={LOGIN}&password={SENHA}`
 
 - `{SITE}`: URL da página que contém os carrosséis
 - `{FOLDER_ID}`: ID da pasta em que as imagens serão salvas no 'Documentos e Mídia'
@@ -149,7 +149,7 @@ A requisição irá retornar uma reposta da seguinte forma: `"Images uploaded su
 
 ### 7. Gerar arquivo txt com queries para atualizar informações sobre os cards
 
-Fazer uma requisição GET para `localhost:3000/get-cards-info`
+Fazer uma requisição POST para `localhost:3000/create-cards-queries-file`
 
 O serviço varre as páginas listadas no arquivo `src/json/cards.json`
 

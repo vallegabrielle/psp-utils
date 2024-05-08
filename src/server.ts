@@ -147,26 +147,6 @@ app.get("/upload-servicos-images", async (req: Request, res: Response) => {
   }
 })
 
-app.get("/get-card-info", async (req: Request, res: Response) => {
-  try {
-    const url = req.query.site as string
-
-    const cardsInfo = await getCardsInfo(url)
-
-    if (!cardsInfo) return
-
-    const queries = cardsInfo.map((item) => item.query)
-
-    const content = queries.join("\n")
-
-    fs.writeFileSync("./a.txt", content)
-
-    res.send(queries)
-  } catch (error) {
-    res.status(500).send(error)
-  }
-})
-
 app.get("/get-cards-info", async (req: Request, res: Response) => {
   try {
     const queriesArr: (string | undefined)[] = []
@@ -188,9 +168,9 @@ app.get("/get-cards-info", async (req: Request, res: Response) => {
 
     fs.writeFileSync(filePath, content)
 
-    console.log("Files created successfully")
+    console.log("File created successfully")
 
-    res.send("Files created successfully")
+    res.send("File created successfully")
   } catch (error) {
     res.status(500).send(error)
   }

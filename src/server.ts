@@ -101,7 +101,7 @@ app.get("/get-servicos-info", async (req: Request, res: Response) => {
   }
 })
 
-app.get("/upload-carrossel-images", async (req: Request, res: Response) => {
+app.post("/upload-carrossel-images", async (req: Request, res: Response) => {
   try {
     const url = req.query.site as string
     const parentFolderId = req.query.folderId as string
@@ -124,7 +124,7 @@ app.get("/upload-carrossel-images", async (req: Request, res: Response) => {
   }
 })
 
-app.get("/upload-servicos-images", async (req: Request, res: Response) => {
+app.post("/upload-servicos-images", async (req: Request, res: Response) => {
   try {
     const url = req.query.site as string
     const parentFolderId = req.query.folderId as string
@@ -147,7 +147,7 @@ app.get("/upload-servicos-images", async (req: Request, res: Response) => {
   }
 })
 
-app.get("/get-cards-info", async (req: Request, res: Response) => {
+app.post("/create-cards-queries-file", async (req: Request, res: Response) => {
   try {
     const queriesArr: (string | undefined)[] = []
 

@@ -137,6 +137,8 @@ app.get("/upload-servicos-images", async (req: Request, res: Response) => {
 
     await uploadImages(imageSources, parentFolderId, login, password)
 
+    console.log("Images uploaded successfully")
+
     res.send("Images uploaded successfully")
   } catch (error) {
     res.status(500).send(error)
@@ -176,12 +178,6 @@ app.get("/get-cards-info", async (req: Request, res: Response) => {
 
       queriesArr.push(...queries)
 
-      // const content = queries.join("\n")
-      // const fileName = card.split("secretarias/")[1].replace(/\//g, "-")
-      // const filePath = `./queries/${fileName}.txt`
-
-      // fs.writeFileSync(filePath, content)
-
       console.log(card, "done")
     }
 
@@ -189,6 +185,8 @@ app.get("/get-cards-info", async (req: Request, res: Response) => {
     const content = queriesArr.join("\n")
 
     fs.writeFileSync(filePath, content)
+
+    console.log("Files created successfully")
 
     res.send("Files created successfully")
   } catch (error) {

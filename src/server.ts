@@ -116,6 +116,8 @@ app.get("/upload-carrossel-images", async (req: Request, res: Response) => {
 
     await uploadImages(imageSources, parentFolderId, login, password)
 
+    console.log("Images uploaded successfully")
+
     res.send("Images uploaded successfully")
   } catch (error) {
     res.status(500).send(error)

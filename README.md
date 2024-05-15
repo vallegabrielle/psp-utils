@@ -171,6 +171,30 @@ A requisição irá retornar uma resposta da seguinte forma: `"File created succ
 
 Um arquivo com todas as queries será criado em `./queries.txt`
 
+### 8. Gerar arquivo txt com os tipos de cada site de uma secretaria
+
+Fazer uma requisição POST para `localhost:3000/create-site-types-file`
+
+O serviço varre as páginas listadas no arquivo `src/json/urls-da-secretaria.json`
+
+A requisição irá retornar uma resposta da seguinte forma:
+
+```bash
+[
+    {
+        "url": "https://www.prefeitura.sp.gov.br/cidade/secretarias/mobilidade/",
+        "hasCarrossel": true,
+        "hasServicos": true,
+        "isNoticia": false,
+        "isCard": true,
+        "isConteudo": false
+    },
+    ...
+]
+```
+
+Um arquivo com todos os tipos será criado em `./secretaria-site-types.txt`
+
 ## Contribuição
 
 Contribuições são bem-vindas! Sinta-se à vontade para abrir uma issue ou enviar um pull request.

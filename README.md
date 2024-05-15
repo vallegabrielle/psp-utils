@@ -39,6 +39,7 @@ Serviços utilitários para atividades da PSP.
 - [5. Fazer upload das imagens dos serviços de uma página](#5-fazer-upload-das-imagens-dos-serviços-de-uma-página)
 - [6. Fazer upload das imagens dos carrosséis de uma página](#6-fazer-upload-das-imagens-dos-carrosséis-de-uma-página)
 - [7. Gerar arquivo txt com queries para atualizar informações sobre os cards](#7-gerar-arquivo-txt-com-queries-para-atualizar-informações-sobre-os-cards)
+- [8. Gerar arquivo txt com os tipos de cada site de uma secretaria](#8-gerar-arquivo-txt-com-os-tipos-de-cada-site-de-uma-secretaria)
 
 ### 1. Listagem de serviços por secretaria
 

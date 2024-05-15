@@ -212,9 +212,9 @@ app.post("/create-site-types-file", async (req: Request, res: Response) => {
       console.log(url, "done")
     }
 
-    const sitesType = createSiteDataFile(sitesData)
+    createSiteDataFile(sitesData)
 
-    res.send(sitesType)
+    res.send(sitesData)
   } catch (error) {
     res.status(500).send(error)
   }

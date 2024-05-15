@@ -9,6 +9,7 @@ import { findHeading } from "@/services/find-heading"
 import { findInAPage } from "@/services/find-in-a-page"
 import { getCardsInfo } from "@/services/get-cards-info"
 import { getCarrossel } from "@/services/get-carrossel"
+import { getHeadingContent } from "@/services/get-heading-content"
 import { getSecretarias } from "@/services/get-secretarias"
 import { getServicos } from "@/services/get-servicos"
 import { hasCarrossel } from "@/services/has-carrossel"
@@ -219,6 +220,39 @@ app.post("/create-site-types-file", async (req: Request, res: Response) => {
     }
 
     createSiteDataFile(sitesData)
+
+    res.send(sitesData)
+  } catch (error) {
+    res.status(500).send(error)
+  }
+})
+
+app.post("/create-home-data-file", async (req: Request, res: Response) => {
+  try {
+    const sitesData = []
+
+    const secretariaUrls = await readUrlsFromFile(
+      "./src/files/txt/urls-da-secretaria.txt"
+    )
+
+    if (!secretariaUrls) return
+
+    for (const url of secretariaUrls) {
+      const acessoRapido = (await getHeadingContent(url, "ACESSO RÁPIDO")) || []
+      const servicos = (await getHeadingContent(url, "SERVIÇOS")) || []
+      const noticas = (await getHeadingContent(url, "NOTÍCIAS")) || []
+
+      const secretariaData = [...acessoRapido, ...servicos, ...noticas]
+
+      sitesData.push(...secretariaData)
+    }
+
+    const filePath = `./home-data.txt`
+    const content = sitesData.join("\n")
+
+    fs.writeFileSync(filePath, content)
+
+    console.log(`File ${filePath} created successfully`)
 
     res.send(sitesData)
   } catch (error) {

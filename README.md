@@ -176,7 +176,7 @@ Um arquivo com todas as queries será criado em `./queries.txt`
 
 Fazer uma requisição POST para `localhost:3000/create-site-types-file`
 
-O serviço varre as páginas listadas no arquivo `src/json/urls-da-secretaria.json`
+O serviço varre as páginas listadas no arquivo `src/files/txt/urls-da-secretaria.txt`
 
 A requisição irá retornar uma resposta da seguinte forma:
 

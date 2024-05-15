@@ -181,7 +181,7 @@ app.post("/create-cards-queries-file", async (req: Request, res: Response) => {
   }
 })
 
-app.get("/get-site-types", async (req: Request, res: Response) => {
+app.post("/create-site-types-file", async (req: Request, res: Response) => {
   try {
     const sitesData = []
 

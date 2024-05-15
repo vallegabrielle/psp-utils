@@ -196,6 +196,31 @@ A requisição irá retornar uma resposta da seguinte forma:
 
 Um arquivo com todos os tipos será criado em `./secretaria-site-types.txt`
 
+### 9. Gerar arquivo txt com informações sobre serviços, notícias e acesso rápido de uma secretaria
+
+Fazer uma requisição POST para `localhost:3000/create-home-data-file`
+
+O serviço varre as páginas listadas no arquivo `src/files/txt/urls-da-secretaria.txt`
+
+A requisição irá retornar uma resposta da seguinte forma:
+
+```bash
+[
+    "343648; serviços; mobilidade/; false; ;",
+    "348172; serviços; mobilidade/; false; ;",
+    "; serviços; mobilidade/; true; https://meuveiculo.prefeitura.sp.gov.br;",
+    "; serviços; mobilidade/; false; ;",
+    "315674; serviços; mobilidade/; false; ;",
+    "; serviços; mobilidade/; true; http://mobilidadesegura.prefeitura.sp.gov.br/;",
+    "; serviços; mobilidade/; false; ;",
+    "346780; notícias; mobilidade/; false; ;",
+    "326366; notícias; mobilidade/; false; ;",
+    "316531; notícias; mobilidade/; false; ;"
+]
+```
+
+Um arquivo com todos os tipos será criado em `./home-data.txt`
+
 ## Contribuição
 
 Contribuições são bem-vindas! Sinta-se à vontade para abrir uma issue ou enviar um pull request.

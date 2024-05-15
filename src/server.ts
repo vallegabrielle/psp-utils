@@ -5,8 +5,8 @@ import * as fs from "fs"
 import * as cards from "@/json/cards.json"
 import * as sites from "@/json/sites.json"
 import { createSiteDataFile } from "@/services/create-site-data-file"
+import { findHeading } from "@/services/find-heading"
 import { findInAPage } from "@/services/find-in-a-page"
-import { findServicos } from "@/services/find-servicos"
 import { getCardsInfo } from "@/services/get-cards-info"
 import { getCarrossel } from "@/services/get-carrossel"
 import { getSecretarias } from "@/services/get-secretarias"
@@ -198,7 +198,7 @@ app.post("/create-site-types-file", async (req: Request, res: Response) => {
         sitesData.push({ url })
       } else {
         const hasCarrossel = await findInAPage(url, "#carouselContent")
-        const hasServicos = await findServicos(url)
+        const hasServicos = await findHeading(url, "SERVIÇOS")
         const isNoticia = await findInAPage(url, ".media-list")
         const isCard = await findInAPage(url, ".panel-notices")
         const isConteudo = await findInAPage(url, ".post-text")

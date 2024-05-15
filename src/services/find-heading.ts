@@ -1,7 +1,7 @@
 import axios from "axios"
 import * as cheerio from "cheerio"
 
-export async function findServicos(url: string) {
+export async function findHeading(url: string, heading: string) {
   try {
     const res = await axios.get(url)
 
@@ -10,13 +10,13 @@ export async function findServicos(url: string) {
     const html = res.data
     const $ = cheerio.load(html)
 
-    const hasServices =
+    const hasHeading =
       $(".panel-heading h2").filter(function () {
-        return $(this).text().trim() === "SERVIÇOS"
+        return $(this).text().trim() === heading
       }).length > 0
 
-    return hasServices
+    return hasHeading
   } catch (error) {
-    console.log("Error @ findServicos:", error)
+    console.log("Error @ findHeading:", error)
   }
 }

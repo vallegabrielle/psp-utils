@@ -4,7 +4,6 @@ import * as fs from "fs"
 
 import * as cards from "@/json/cards.json"
 import * as sites from "@/json/sites.json"
-import * as secretariaUrls from "@/json/urls-da-secretaria.json"
 import { createSiteDataFile } from "@/services/create-site-data-file"
 import { findInAPage } from "@/services/find-in-a-page"
 import { findServicos } from "@/services/find-servicos"
@@ -14,6 +13,7 @@ import { getSecretarias } from "@/services/get-secretarias"
 import { getServicos } from "@/services/get-servicos"
 import { hasCarrossel } from "@/services/has-carrossel"
 import { uploadImages } from "@/services/upload-images"
+import { readUrlsFromFile } from "@/utils/read-urls-from-file"
 
 const PORT = 3000
 
@@ -184,6 +184,12 @@ app.post("/create-cards-queries-file", async (req: Request, res: Response) => {
 app.post("/create-site-types-file", async (req: Request, res: Response) => {
   try {
     const sitesData = []
+
+    const secretariaUrls = await readUrlsFromFile(
+      "./src/files/txt/urls-da-secretaria.txt"
+    )
+
+    if (!secretariaUrls) return
 
     for (const url of secretariaUrls) {
       const res = await fetch(url)

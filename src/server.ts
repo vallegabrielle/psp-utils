@@ -236,15 +236,24 @@ app.post("/create-home-data-file", async (req: Request, res: Response) => {
     )
 
     if (!secretariaUrls) return
+    let count = 0
 
     for (const url of secretariaUrls) {
       const acessoRapido = (await getHeadingContent(url, "ACESSO RÁPIDO")) || []
       const servicos = (await getHeadingContent(url, "SERVIÇOS")) || []
       const noticas = (await getHeadingContent(url, "NOTÍCIAS")) || []
+      const saibaMais = (await getHeadingContent(url, "SAIBA MAIS")) || []
 
-      const secretariaData = [...acessoRapido, ...servicos, ...noticas]
+      const secretariaData = [
+        ...acessoRapido,
+        ...servicos,
+        ...noticas,
+        ...saibaMais,
+      ]
 
       sitesData.push(...secretariaData)
+      console.log(url, count + 1, "/", secretariaUrls.length, "done")
+      count++
     }
 
     const filePath = `./home-data.txt`

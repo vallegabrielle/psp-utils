@@ -1,14 +1,19 @@
 import * as express from "express"
 import { Request, Response } from "express"
+import * as fs from "fs"
+
+import * as cards from "@/json/cards.json"
+import * as sites from "@/json/sites.json"
+import * as secretariaUrls from "@/json/urls-da-secretaria.json"
+import { createSiteDataFile } from "@/services/create-site-data-file"
+import { findInAPage } from "@/services/find-in-a-page"
+import { findServicos } from "@/services/find-servicos"
+import { getCardsInfo } from "@/services/get-cards-info"
+import { getCarrossel } from "@/services/get-carrossel"
 import { getSecretarias } from "@/services/get-secretarias"
 import { getServicos } from "@/services/get-servicos"
 import { hasCarrossel } from "@/services/has-carrossel"
-import { getCarrossel } from "@/services/get-carrossel"
 import { uploadImages } from "@/services/upload-images"
-import { getCardsInfo } from "@/services/get-cards-info"
-import * as sites from "@/json/sites.json"
-import * as fs from "fs"
-import * as cards from "@/json/cards.json"
 
 const PORT = 3000
 
@@ -171,6 +176,45 @@ app.post("/create-cards-queries-file", async (req: Request, res: Response) => {
     console.log("File created successfully")
 
     res.send("File created successfully")
+  } catch (error) {
+    res.status(500).send(error)
+  }
+})
+
+app.get("/get-site-types", async (req: Request, res: Response) => {
+  try {
+    const sitesData = []
+
+    for (const url of secretariaUrls) {
+      const res = await fetch(url)
+
+      if (res.status === 500) {
+        sitesData.push({ url })
+      } else {
+        const hasCarrossel = await findInAPage(url, "#carouselContent")
+        const hasServicos = await findServicos(url)
+        const isNoticia = await findInAPage(url, ".media-list")
+        const isCard = await findInAPage(url, ".panel-notices")
+        const isConteudo = await findInAPage(url, ".post-text")
+
+        const foundData = {
+          url,
+          hasCarrossel,
+          hasServicos,
+          isNoticia,
+          isCard,
+          isConteudo,
+        }
+
+        sitesData.push(foundData)
+      }
+
+      console.log(url, "done")
+    }
+
+    const sitesType = createSiteDataFile(sitesData)
+
+    res.send(sitesType)
   } catch (error) {
     res.status(500).send(error)
   }

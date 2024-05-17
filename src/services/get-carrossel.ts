@@ -62,7 +62,7 @@ export async function getCarrossel(url: string) {
       const link = href
       const tipoLink = categorizeUrl(href)
 
-      const query = `${idWaram}; ${sessao}; ${titulo}; ${resumo}; ${urlImg}; ${altImg}; ${path}; ${isLinkExterno}; ${link}; ${tipoLink}`
+      const query = `${idWaram}; ${sessao}; ${titulo}; ${resumo}; ${urlImg}; ${altImg}; ${path}; ${isLinkExterno}; ${link}; ${tipoLink};`
 
       carousel.push({
         id: index + 1,

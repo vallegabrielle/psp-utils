@@ -54,7 +54,7 @@ export async function getHeadingContent(url: string, heading: string) {
           const link = href
           const tipoLink = categorizeUrl(href)
 
-          const query = `${idWaram}; ${sessao}; ${titulo}; ${resumo}; ${urlImg}; ${altImg}; ${path}; ${isLinkExterno}; ${link}; ${tipoLink}`
+          const query = `${idWaram}; ${sessao}; ${titulo}; ${resumo}; ${urlImg}; ${altImg}; ${path}; ${isLinkExterno}; ${link}; ${tipoLink};`
 
           links.push(query)
         })

@@ -248,6 +248,8 @@ app.post("/create-home-data-file", async (req: Request, res: Response) => {
         (await getByClass(url, "div.thumbnail-aside a", "BANNERS")) || []
       const videos =
         (await getByClass(url, "div.embed-responsive iframe", "VÍDEOS")) || []
+      const carrosseisRes = await getCarrossel(url)
+      const carrosseis = carrosseisRes?.map((el) => el.query) || []
 
       const secretariaData = [
         ...acessoRapido,
@@ -256,6 +258,7 @@ app.post("/create-home-data-file", async (req: Request, res: Response) => {
         ...saibaMais,
         ...banners,
         ...videos,
+        ...carrosseis,
       ]
 
       sitesData.push(...secretariaData)

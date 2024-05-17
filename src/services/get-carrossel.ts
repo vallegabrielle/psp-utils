@@ -1,6 +1,8 @@
 import axios from "axios"
 import * as cheerio from "cheerio"
 
+import { isAbsoluteUrl } from "@/utils/is-absolute-url"
+
 type Carousel = {
   id: number
   href: string | undefined
@@ -8,6 +10,7 @@ type Carousel = {
   imgAlt: string | undefined
   titulo: string | undefined
   descricao: string | undefined
+  query?: string
 }[]
 
 export async function getCarrossel(url: string) {
@@ -28,11 +31,26 @@ export async function getCarrossel(url: string) {
     const carousel: Carousel = []
 
     $carouselContent(".item").each((index, element) => {
-      const href = $(element).find("a").attr("href")
+      const href = $(element).find("a").attr("href") || ""
       const imgSrc = $(element).find("img").attr("src")
       const imgAlt = $(element).find("img").attr("alt")
       const h2Text = $(element).find("h2").text().trim()
       const pText = $(element).find("p").text().trim()
+
+      let id = ""
+      if (href.includes("p=")) id = href.split("p=")[1]
+
+      const originalPath = url.split("secretarias/")[1]
+      let urlPath = originalPath || ""
+
+      if (originalPath?.includes("index.php")) {
+        urlPath = originalPath.split("index.php")[0]
+      }
+
+      const linkExterno =
+        isAbsoluteUrl(href) && !href.includes("www.prefeitura.sp.gov.br")
+
+      const urlLinkExterno = linkExterno ? href : ""
 
       carousel.push({
         id: index + 1,
@@ -41,6 +59,7 @@ export async function getCarrossel(url: string) {
         imgAlt,
         titulo: h2Text,
         descricao: pText,
+        query: `${id}; carrosseis; ${urlPath}; ${linkExterno}; ${urlLinkExterno};`,
       })
     })
 

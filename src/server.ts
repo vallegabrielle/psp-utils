@@ -7,6 +7,7 @@ import * as sites from "@/json/sites.json"
 import { createSiteDataFile } from "@/services/create-site-data-file"
 import { findHeading } from "@/services/find-heading"
 import { findInAPage } from "@/services/find-in-a-page"
+import { getByClass } from "@/services/get-by-class"
 import { getCardsInfo } from "@/services/get-cards-info"
 import { getCarrossel } from "@/services/get-carrossel"
 import { getHeadingContent } from "@/services/get-heading-content"
@@ -243,16 +244,22 @@ app.post("/create-home-data-file", async (req: Request, res: Response) => {
       const servicos = (await getHeadingContent(url, "SERVIÇOS")) || []
       const noticas = (await getHeadingContent(url, "NOTÍCIAS")) || []
       const saibaMais = (await getHeadingContent(url, "SAIBA MAIS")) || []
+      const banners =
+        (await getByClass(url, "div.thumbnail-aside a", "banners")) || []
+      const videos =
+        (await getByClass(url, "div.embed-responsive iframe", "videos")) || []
 
       const secretariaData = [
         ...acessoRapido,
         ...servicos,
         ...noticas,
         ...saibaMais,
+        ...banners,
+        ...videos,
       ]
 
       sitesData.push(...secretariaData)
-      console.log(url, count + 1, "/", secretariaUrls.length, "done")
+      console.log(`${url} ${count + 1}/${secretariaUrls.length} done`)
       count++
     }
 

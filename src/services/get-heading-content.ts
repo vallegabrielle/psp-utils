@@ -33,15 +33,12 @@ export async function getHeadingContent(url: string, heading: string) {
           let id = ""
           if (href.includes("p=")) id = href.split("p=")[1]
 
-          if (href) {
-            links.push(
-              `${id}; ${heading
-                .toLowerCase()
-                .replace(" ", "-")}; ${urlPath}; ${linkExterno}; ${
-                linkExterno ? href : ""
-              };`
-            )
-          }
+          const categoria = heading.toLowerCase().replace(" ", "-")
+          const urlLinkExterno = linkExterno ? href : ""
+
+          links.push(
+            `${id}; ${categoria}; ${urlPath}; ${linkExterno}; ${urlLinkExterno};`
+          )
         })
     })
 

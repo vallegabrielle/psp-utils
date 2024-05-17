@@ -1,6 +1,8 @@
 import axios from "axios"
 import * as cheerio from "cheerio"
 
+import { isAbsoluteUrl } from "@/utils/is-absolute-url"
+
 export async function getHeadingContent(url: string, heading: string) {
   try {
     const res = await axios.get(url)
@@ -21,7 +23,8 @@ export async function getHeadingContent(url: string, heading: string) {
         .each((_, anchor) => {
           const href = $(anchor).attr("href") || ""
 
-          const linkExterno = !href.includes("www.prefeitura.sp.gov.br")
+          const linkExterno =
+            isAbsoluteUrl(href) && !href.includes("www.prefeitura.sp.gov.br")
 
           const originalPath = url.split("secretarias/")[1]
           let urlPath = originalPath || ""

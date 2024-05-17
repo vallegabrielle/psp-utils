@@ -1,6 +1,8 @@
 import axios from "axios"
 import * as cheerio from "cheerio"
 
+import { isAbsoluteUrl } from "@/utils/is-absolute-url"
+
 export async function getByClass(
   url: string,
   className: string,
@@ -22,7 +24,8 @@ export async function getByClass(
       const src = $(element).attr("src") || ""
 
       const linkExterno =
-        !href.includes("www.prefeitura.sp.gov.br") || src !== ""
+        (isAbsoluteUrl(href) && !href.includes("www.prefeitura.sp.gov.br")) ||
+        src !== ""
 
       const originalPath = url.split("secretarias/")[1]
       let urlPath = originalPath || ""

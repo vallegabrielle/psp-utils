@@ -245,9 +245,9 @@ app.post("/create-home-data-file", async (req: Request, res: Response) => {
       const noticas = (await getHeadingContent(url, "NOTÍCIAS")) || []
       const saibaMais = (await getHeadingContent(url, "SAIBA MAIS")) || []
       const banners =
-        (await getByClass(url, "div.thumbnail-aside a", "banners")) || []
+        (await getByClass(url, "div.thumbnail-aside a", "BANNERS")) || []
       const videos =
-        (await getByClass(url, "div.embed-responsive iframe", "videos")) || []
+        (await getByClass(url, "div.embed-responsive iframe", "VÍDEOS")) || []
 
       const secretariaData = [
         ...acessoRapido,

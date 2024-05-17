@@ -1,6 +1,7 @@
 import axios from "axios"
 import * as cheerio from "cheerio"
 
+import { categorizeUrl } from "@/utils/categorize-url"
 import { isAbsoluteUrl } from "@/utils/is-absolute-url"
 
 export async function getByClass(
@@ -22,6 +23,10 @@ export async function getByClass(
     divsWithClass.each((index, element) => {
       const href = $(element).attr("href") || ""
       const src = $(element).attr("src") || ""
+      const imgSrc = $(element).find("img").attr("src") || ""
+      const imgAlt = $(element).find("img").attr("alt") || ""
+      const title = $(element).find("h3").text().trim()
+      const description = $(element).find("p").text().trim()
 
       const linkExterno =
         (isAbsoluteUrl(href) && !href.includes("www.prefeitura.sp.gov.br")) ||
@@ -37,15 +42,25 @@ export async function getByClass(
       let id = ""
       if (href.includes("p=")) id = href.split("p=")[1]
 
-      let link = href
-      if (src !== "") link = src
+      let linkFinal = href
+      if (src !== "") linkFinal = src
 
       const categoria = heading.toLowerCase().replace(" ", "-")
-      const urlLinkExterno = linkExterno ? link : ""
 
-      links.push(
-        `${id}; ${categoria}; ${urlPath}; ${linkExterno}; ${urlLinkExterno};`
-      )
+      const idWaram = id
+      const sessao = categoria
+      const titulo = title
+      const resumo = description
+      const urlImg = imgSrc
+      const altImg = imgAlt
+      const path = urlPath
+      const isLinkExterno = linkExterno
+      const link = linkFinal
+      const tipoLink = categorizeUrl(linkFinal)
+
+      const str = `${idWaram}; ${sessao}; ${titulo}; ${resumo}; ${urlImg}; ${altImg}; ${path}; ${isLinkExterno}; ${link}; ${tipoLink};`
+
+      links.push(str)
     })
 
     return links

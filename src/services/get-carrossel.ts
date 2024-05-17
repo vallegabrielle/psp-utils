@@ -1,6 +1,7 @@
 import axios from "axios"
 import * as cheerio from "cheerio"
 
+import { categorizeUrl } from "@/utils/categorize-url"
 import { isAbsoluteUrl } from "@/utils/is-absolute-url"
 
 type Carousel = {
@@ -32,8 +33,8 @@ export async function getCarrossel(url: string) {
 
     $carouselContent(".item").each((index, element) => {
       const href = $(element).find("a").attr("href") || ""
-      const imgSrc = $(element).find("img").attr("src")
-      const imgAlt = $(element).find("img").attr("alt")
+      const imgSrc = $(element).find("img").attr("src") || ""
+      const imgAlt = $(element).find("img").attr("alt") || ""
       const h2Text = $(element).find("h2").text().trim()
       const pText = $(element).find("p").text().trim()
 
@@ -50,7 +51,18 @@ export async function getCarrossel(url: string) {
       const linkExterno =
         isAbsoluteUrl(href) && !href.includes("www.prefeitura.sp.gov.br")
 
-      const urlLinkExterno = linkExterno ? href : ""
+      const idWaram = id
+      const sessao = "carrosseis"
+      const titulo = h2Text
+      const resumo = pText
+      const urlImg = imgSrc
+      const altImg = imgAlt
+      const path = urlPath
+      const isLinkExterno = linkExterno
+      const link = href
+      const tipoLink = categorizeUrl(href)
+
+      const query = `${idWaram}; ${sessao}; ${titulo}; ${resumo}; ${urlImg}; ${altImg}; ${path}; ${isLinkExterno}; ${link}; ${tipoLink}`
 
       carousel.push({
         id: index + 1,
@@ -59,7 +71,7 @@ export async function getCarrossel(url: string) {
         imgAlt,
         titulo: h2Text,
         descricao: pText,
-        query: `${id}; carrosseis; ${urlPath}; ${linkExterno}; ${urlLinkExterno};`,
+        query,
       })
     })
 

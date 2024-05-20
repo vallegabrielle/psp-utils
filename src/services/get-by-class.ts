@@ -4,10 +4,24 @@ import * as cheerio from "cheerio"
 import { categorizeUrl } from "@/utils/categorize-url"
 import { isAbsoluteUrl } from "@/utils/is-absolute-url"
 
+type Data = {
+  idWaram: string
+  sessao: string
+  titulo: string
+  resumo: string
+  urlImg: string
+  altImg: string
+  path: string
+  isLinkExterno: boolean
+  link: string
+  tipoLink: string
+}
+
 export async function getByClass(
   url: string,
   className: string,
-  heading: string
+  heading: string,
+  shouldSendJSON = false
 ) {
   try {
     const res = await axios.get(url)
@@ -19,7 +33,7 @@ export async function getByClass(
 
     const divsWithClass = $(`${className}`)
 
-    const links: string[] = []
+    const links: (string | Data)[] = []
     divsWithClass.each((index, element) => {
       const href = $(element).attr("href") || ""
       const src = $(element).attr("src") || ""
@@ -47,20 +61,26 @@ export async function getByClass(
 
       const categoria = heading.toLowerCase().replace(" ", "-")
 
-      const idWaram = id
-      const sessao = categoria
-      const titulo = title
-      const resumo = description
-      const urlImg = imgSrc
-      const altImg = imgAlt
-      const path = urlPath
-      const isLinkExterno = linkExterno
-      const link = linkFinal
-      const tipoLink = categorizeUrl(linkFinal)
+      const data = {
+        idWaram: id,
+        sessao: categoria,
+        titulo: title,
+        resumo: description,
+        urlImg: imgSrc,
+        altImg: imgAlt,
+        path: urlPath,
+        isLinkExterno: linkExterno,
+        link: linkFinal,
+        tipoLink: categorizeUrl(linkFinal),
+      }
 
-      const str = `${idWaram}; ${sessao}; ${titulo}; ${resumo}; ${urlImg}; ${altImg}; ${path}; ${isLinkExterno}; ${link}; ${tipoLink};`
+      const str = `${data.idWaram}; ${data.sessao}; ${data.titulo}; ${data.resumo}; ${data.urlImg}; ${data.altImg}; ${data.path}; ${data.isLinkExterno}; ${data.link}; ${data.tipoLink};`
 
-      links.push(str)
+      if (shouldSendJSON) {
+        links.push(data)
+      } else {
+        links.push(str)
+      }
     })
 
     return links

@@ -4,7 +4,24 @@ import * as cheerio from "cheerio"
 import { categorizeUrl } from "@/utils/categorize-url"
 import { isAbsoluteUrl } from "@/utils/is-absolute-url"
 
-export async function getHeadingContent(url: string, heading: string) {
+type Data = {
+  idWaram: string
+  sessao: string
+  titulo: string
+  resumo: string
+  urlImg: string
+  altImg: string
+  path: string
+  isLinkExterno: boolean
+  link: string
+  tipoLink: string
+}
+
+export async function getHeadingContent(
+  url: string,
+  heading: string,
+  shouldSendJSON = false
+) {
   try {
     const res = await axios.get(url)
 
@@ -17,7 +34,7 @@ export async function getHeadingContent(url: string, heading: string) {
       .parent()
       .parent()
 
-    const links: string[] = []
+    const links: (string | Data)[] = []
     divsWithASD.each((index, element) => {
       $(element)
         .find("a")
@@ -41,22 +58,32 @@ export async function getHeadingContent(url: string, heading: string) {
           let id = ""
           if (href.includes("p=")) id = href.split("p=")[1]
 
-          const categoria = heading.toLowerCase().replace(" ", "-")
+          const categoria = heading
+            .toLowerCase()
+            .replace(" ", "-")
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
 
-          const idWaram = id
-          const sessao = categoria
-          const titulo = title
-          const resumo = description
-          const urlImg = imgSrc
-          const altImg = imgAlt
-          const path = urlPath
-          const isLinkExterno = linkExterno
-          const link = href
-          const tipoLink = categorizeUrl(href)
+          const data = {
+            idWaram: id,
+            sessao: categoria,
+            titulo: title,
+            resumo: description,
+            urlImg: imgSrc,
+            altImg: imgAlt,
+            path: urlPath,
+            isLinkExterno: linkExterno,
+            link: href,
+            tipoLink: categorizeUrl(href),
+          }
 
-          const query = `${idWaram}; ${sessao}; ${titulo}; ${resumo}; ${urlImg}; ${altImg}; ${path}; ${isLinkExterno}; ${link}; ${tipoLink};`
+          const query = `${data.idWaram}; ${data.sessao}; ${data.titulo}; ${data.resumo}; ${data.urlImg}; ${data.altImg}; ${data.path}; ${data.isLinkExterno}; ${data.link}; ${data.tipoLink};`
 
-          links.push(query)
+          if (shouldSendJSON) {
+            links.push(data)
+          } else {
+            links.push(query)
+          }
         })
     })
 

@@ -279,4 +279,48 @@ app.post("/create-home-data-file", async (req: Request, res: Response) => {
   }
 })
 
+app.get("/get-home-data", async (req: Request, res: Response) => {
+  try {
+    const sitesData = []
+
+    const secretariaUrls = await readUrlsFromFile(
+      "./src/files/txt/urls-da-secretaria.txt"
+    )
+
+    if (!secretariaUrls) return
+    let count = 0
+
+    for (const url of secretariaUrls) {
+      const acessoRapido =
+        (await getHeadingContent(url, "ACESSO RÁPIDO", true)) || []
+      const servicos = (await getHeadingContent(url, "SERVIÇOS", true)) || []
+      const noticas = (await getHeadingContent(url, "NOTÍCIAS", true)) || []
+      const saibaMais = (await getHeadingContent(url, "SAIBA MAIS", true)) || []
+      const banners =
+        (await getByClass(url, "div.thumbnail-aside a", "BANNERS")) || []
+      const videos =
+        (await getByClass(url, "div.embed-responsive iframe", "VÍDEOS")) || []
+      const carrosseis = (await getCarrossel(url, true)) || []
+
+      const secretariaData = [
+        ...acessoRapido,
+        ...servicos,
+        ...noticas,
+        ...saibaMais,
+        ...banners,
+        ...videos,
+        ...carrosseis,
+      ]
+
+      sitesData.push(...secretariaData)
+      console.log(`${url} ${count + 1}/${secretariaUrls.length} done`)
+      count++
+    }
+
+    res.send(sitesData)
+  } catch (error) {
+    res.status(500).send(error)
+  }
+})
+
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`))

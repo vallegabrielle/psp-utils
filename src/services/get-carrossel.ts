@@ -12,9 +12,24 @@ type Carousel = {
   titulo: string | undefined
   descricao: string | undefined
   query?: string
-}[]
+}
 
-export async function getCarrossel(url: string) {
+type Data = {
+  idWaram: string
+  sessao: string
+  titulo: string
+  resumo: string
+  urlImg: string
+  altImg: string
+  path: string
+  isLinkExterno: boolean
+  link: string
+  tipoLink: string
+  query?: string
+  imgSrc?: string
+}
+
+export async function getCarrossel(url: string, shouldSendHomeData = false) {
   try {
     const res = await axios.get(url)
 
@@ -29,7 +44,7 @@ export async function getCarrossel(url: string) {
 
     const $carouselContent = cheerio.load(carouselHtml)
 
-    const carousel: Carousel = []
+    const carousel: (Carousel | Data)[] = []
 
     $carouselContent(".item").each((index, element) => {
       const href = $(element).find("a").attr("href") || ""
@@ -51,28 +66,34 @@ export async function getCarrossel(url: string) {
       const linkExterno =
         isAbsoluteUrl(href) && !href.includes("www.prefeitura.sp.gov.br")
 
-      const idWaram = id
-      const sessao = "carrosseis"
-      const titulo = h2Text
-      const resumo = pText
-      const urlImg = imgSrc
-      const altImg = imgAlt
-      const path = urlPath
-      const isLinkExterno = linkExterno
-      const link = href
-      const tipoLink = categorizeUrl(href)
-
-      const query = `${idWaram}; ${sessao}; ${titulo}; ${resumo}; ${urlImg}; ${altImg}; ${path}; ${isLinkExterno}; ${link}; ${tipoLink};`
-
-      carousel.push({
-        id: index + 1,
-        href,
-        imgSrc,
-        imgAlt,
+      const data = {
+        idWaram: id,
+        sessao: "carrosseis",
         titulo: h2Text,
-        descricao: pText,
-        query,
-      })
+        resumo: pText,
+        urlImg: imgSrc,
+        altImg: imgAlt,
+        path: urlPath,
+        isLinkExterno: linkExterno,
+        link: href,
+        tipoLink: categorizeUrl(href),
+      }
+
+      const query = `${data.idWaram}; ${data.sessao}; ${data.titulo}; ${data.resumo}; ${data.urlImg}; ${data.altImg}; ${data.path}; ${data.isLinkExterno}; ${data.link}; ${data.tipoLink};`
+
+      if (shouldSendHomeData) {
+        carousel.push(data)
+      } else {
+        carousel.push({
+          id: index + 1,
+          href,
+          imgSrc,
+          imgAlt,
+          titulo: h2Text,
+          descricao: pText,
+          query,
+        })
+      }
     })
 
     return carousel

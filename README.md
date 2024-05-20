@@ -216,11 +216,39 @@ A requisição irá retornar uma resposta da seguinte forma:
     "; serviços; mobilidade/; false; ;",
     "346780; notícias; mobilidade/; false; ;",
     "326366; notícias; mobilidade/; false; ;",
-    "316531; notícias; mobilidade/; false; ;"
+    "316531; notícias; mobilidade/; false; ;",
+    ...
 ]
 ```
 
-Um arquivo com todos os tipos será criado em `./home-data.txt`
+### 9. Listar informações sobre serviços, notícias e acesso rápido de uma secretaria
+
+Fazer uma requisição GET para `localhost:3000/get-home-data`
+
+O serviço varre as páginas listadas no arquivo `src/files/txt/urls-da-secretaria.txt`
+
+A requisição irá retornar uma resposta da seguinte forma:
+
+```bash
+[
+     {
+        "idWaram": "273172",
+        "sessao": "acesso-rapido",
+        "titulo": "- Lista referente à entrega das órteses suropodálicas das pessoas que aguardavam em fila ( 2ª etapa do acordo judicial)- Doações: Coronavírus (Covid-19)- Biblioteca Virtual de Saúde- Convite à manifestação de interesse em serviços de gerenciamento de projeto - Avança Saúde SP",
+        "descricao": "",
+        "urlImg": "",
+        "altImg": "",
+        "path": "saude/",
+        "isLinkExterno": false,
+        "link": "https://www.prefeitura.sp.gov.br/cidade/secretarias/saude/atencao_basica/pessoa_com_deficiencia/index.php?p=273172",
+        "tipoLink": "link"
+    },
+    ...
+]
+```
+
+- `sessao`: "acesso-rapido", "servicos", "noticias", "saiba-mais" ou "banners"
+- `tipoLink`: "imagem", "documento" ou "link"
 
 ## Contribuição
 

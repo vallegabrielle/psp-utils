@@ -41,6 +41,7 @@ Serviços utilitários para atividades da PSP.
 - [7. Gerar arquivo txt com queries para atualizar informações sobre os cards](#7-gerar-arquivo-txt-com-queries-para-atualizar-informações-sobre-os-cards)
 - [8. Gerar arquivo txt com os tipos de cada site de uma secretaria](#8-gerar-arquivo-txt-com-os-tipos-de-cada-site-de-uma-secretaria)
 - [9. Gerar arquivo txt com informações sobre serviços, notícias e acesso rápido de uma secretaria](#9-gerar-arquivo-txt-com-informações-sobre-serviços-notícias-e-acesso-rápido-de-uma-secretaria)
+- [10. Listar informações sobre serviços, notícias e acesso rápido de uma secretaria](#10-listar-informações-sobre-serviços-notícias-e-acesso-rápido-de-uma-secretaria)
 
 ### 1. Listagem de serviços por secretaria
 
@@ -221,7 +222,7 @@ A requisição irá retornar uma resposta da seguinte forma:
 ]
 ```
 
-### 9. Listar informações sobre serviços, notícias e acesso rápido de uma secretaria
+### 10. Listar informações sobre serviços, notícias e acesso rápido de uma secretaria
 
 Fazer uma requisição GET para `localhost:3000/get-home-data`
 

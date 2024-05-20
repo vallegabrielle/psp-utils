@@ -297,9 +297,14 @@ app.get("/get-home-data", async (req: Request, res: Response) => {
       const noticas = (await getHeadingContent(url, "NOTÍCIAS", true)) || []
       const saibaMais = (await getHeadingContent(url, "SAIBA MAIS", true)) || []
       const banners =
-        (await getByClass(url, "div.thumbnail-aside a", "BANNERS")) || []
+        (await getByClass(url, "div.thumbnail-aside a", "BANNERS", true)) || []
       const videos =
-        (await getByClass(url, "div.embed-responsive iframe", "VÍDEOS")) || []
+        (await getByClass(
+          url,
+          "div.embed-responsive iframe",
+          "VÍDEOS",
+          true
+        )) || []
       const carrosseis = (await getCarrossel(url, true)) || []
 
       const secretariaData = [

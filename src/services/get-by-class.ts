@@ -8,7 +8,7 @@ type Data = {
   idWaram: string
   sessao: string
   titulo: string
-  resumo: string
+  descricao: string
   urlImg: string
   altImg: string
   path: string
@@ -65,7 +65,7 @@ export async function getByClass(
         idWaram: id,
         sessao: categoria,
         titulo: title,
-        resumo: description,
+        descricao: description,
         urlImg: imgSrc,
         altImg: imgAlt,
         path: urlPath,
@@ -74,7 +74,7 @@ export async function getByClass(
         tipoLink: categorizeUrl(linkFinal),
       }
 
-      const str = `${data.idWaram}; ${data.sessao}; ${data.titulo}; ${data.resumo}; ${data.urlImg}; ${data.altImg}; ${data.path}; ${data.isLinkExterno}; ${data.link}; ${data.tipoLink};`
+      const str = `${data.idWaram}; ${data.sessao}; ${data.titulo}; ${data.descricao}; ${data.urlImg}; ${data.altImg}; ${data.path}; ${data.isLinkExterno}; ${data.link}; ${data.tipoLink};`
 
       if (shouldSendJSON) {
         links.push(data)

@@ -253,8 +253,16 @@ A requisição irá retornar uma resposta da seguinte forma:
 ]
 ```
 
-- `sessao`: "acesso-rapido", "servicos", "noticias", "saiba-mais", "banners", "carrosseis", "cards" ou "cards-heading"
-- `tipoLink`: "imagem", "documento" ou "link"
+- `idWaram`: o id presente na url ('?p=244486')
+- `sessao`: a sessão da página, valores possíveis --> "acesso-rapido", "servicos", "noticias", "saiba-mais", "banners", "carrosseis", "cards" ou "cards-heading"
+- `titulo`: o titulo do conteúdo
+- `descricao`: a descrição do conteúdo
+- `urlImg`: a url da imagem
+- `altImg`: o alt da imagem
+- `path`: o caminho referente ao conteúdo, extraído da url da página
+- `isLinkExterno`: boolean indicando se é ou não um link externo
+- `link`: o link do conteúdo
+- `tipoLink`: o tipo do link do conteúdo, valores possíveis --> "imagem", "documento" ou "link"
 
 ## Contribuição
 

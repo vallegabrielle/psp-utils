@@ -306,6 +306,9 @@ app.get("/get-home-data", async (req: Request, res: Response) => {
           true
         )) || []
       const carrosseis = (await getCarrossel(url, true)) || []
+      const cardsHeading =
+        (await getByClass(url, "div.media", "cards-heading", true)) || []
+      const cards = (await getByClass(url, "a.lnk-panel", "cards", true)) || []
 
       const secretariaData = [
         ...acessoRapido,
@@ -315,6 +318,8 @@ app.get("/get-home-data", async (req: Request, res: Response) => {
         ...banners,
         ...videos,
         ...carrosseis,
+        ...cardsHeading,
+        ...cards,
       ]
 
       sitesData.push(...secretariaData)

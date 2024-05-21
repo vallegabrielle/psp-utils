@@ -33,13 +33,18 @@ export async function getByClass(
 
     const divsWithClass = $(`${className}`)
 
+    let titleHeading = "h3"
+    if (heading === "cards-heading" || heading === "cards") {
+      titleHeading = "h2"
+    }
+
     const links: (string | Data)[] = []
     divsWithClass.each((index, element) => {
       const href = $(element).attr("href") || ""
       const src = $(element).attr("src") || ""
       const imgSrc = $(element).find("img").attr("src") || ""
       const imgAlt = $(element).find("img").attr("alt") || ""
-      const title = $(element).find("h3").text().trim()
+      const title = $(element).find(titleHeading).text().trim()
       const description = $(element).find("p").text().trim()
 
       const linkExterno =

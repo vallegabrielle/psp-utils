@@ -10,6 +10,6 @@ export function categorizeUrl(url: string) {
   } else if (webpagePattern.test(url) || !/\.[a-z]{2,4}$/i.test(url)) {
     return "link"
   } else {
-    return "link"
+    return ""
   }
 }

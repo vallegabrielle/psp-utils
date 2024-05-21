@@ -297,18 +297,23 @@ app.get("/get-home-data", async (req: Request, res: Response) => {
       const noticas = (await getHeadingContent(url, "NOTÍCIAS", true)) || []
       const saibaMais = (await getHeadingContent(url, "SAIBA MAIS", true)) || []
       const banners =
-        (await getByClass(url, "div.thumbnail-aside a", "BANNERS", true)) || []
+        (await getByClass(
+          url,
+          "div.thumbnail-aside a",
+          "imagens-em-destaque",
+          true
+        )) || []
       const videos =
         (await getByClass(
           url,
           "div.embed-responsive iframe",
-          "VÍDEOS",
+          "videos",
           true
         )) || []
       const carrosseis = (await getCarrossel(url, true)) || []
       const cardsHeading =
-        (await getByClass(url, "div.media", "cards-heading", true)) || []
-      const cards = (await getByClass(url, "a.lnk-panel", "cards", true)) || []
+        (await getByClass(url, "div.media", "topo-de-pagina", true)) || []
+      const cards = (await getByClass(url, "a.lnk-panel", "capas", true)) || []
 
       const secretariaData = [
         ...acessoRapido,

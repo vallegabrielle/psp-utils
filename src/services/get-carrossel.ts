@@ -68,7 +68,7 @@ export async function getCarrossel(url: string, shouldSendHomeData = false) {
 
       const data = {
         idWaram: id,
-        secao: "carrosseis",
+        secao: "carrossel",
         titulo: h2Text,
         descricao: pText,
         urlImg: imgSrc,

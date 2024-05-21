@@ -6,7 +6,7 @@ import { isAbsoluteUrl } from "@/utils/is-absolute-url"
 
 type Data = {
   idWaram: string
-  sessao: string
+  secao: string
   titulo: string
   descricao: string
   urlImg: string
@@ -66,7 +66,7 @@ export async function getHeadingContent(
 
           const data = {
             idWaram: id,
-            sessao: categoria,
+            secao: categoria,
             titulo: title,
             descricao: description,
             urlImg: imgSrc,
@@ -77,7 +77,7 @@ export async function getHeadingContent(
             tipoLink: categorizeUrl(href),
           }
 
-          const query = `${data.idWaram}; ${data.sessao}; ${data.titulo}; ${data.descricao}; ${data.urlImg}; ${data.altImg}; ${data.path}; ${data.isLinkExterno}; ${data.link}; ${data.tipoLink};`
+          const query = `${data.idWaram}; ${data.secao}; ${data.titulo}; ${data.descricao}; ${data.urlImg}; ${data.altImg}; ${data.path}; ${data.isLinkExterno}; ${data.link}; ${data.tipoLink};`
 
           if (shouldSendJSON) {
             links.push(data)

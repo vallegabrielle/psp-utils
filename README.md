@@ -239,7 +239,7 @@ A requisição irá retornar uma resposta da seguinte forma:
 [
     {
         "idWaram": "",
-        "sessao": "cards-heading",
+        "secao": "cards-heading",
         "titulo": "Acesso à Informação",
         "descricao": "Esta seção reúne e divulga, de forma espontânea, dados da Casa Civil do Gabinete do Prefeito que são de interesse coletivo ou geral com o objetivo de facilitar o acesso à informação pública, conforme determinação da Lei Federal nº 12.527, de 18/11/2011 (LAI), e o Decreto Municipal nº 53.623/2012. Na Casa Civil do Gabinete do Prefeito a autoridade de monitoramento da LAI pode ser contatada no endereço eletrônico: casacivil@prefeitura.sp.gov.br. Informações adicionais podem ser obtidas no Portal da Transparência.",
         "urlImg": "https://www.prefeitura.sp.gov.br/cidade/secretarias/upload/chamadas/acesso_informacao_1510324640.png",
@@ -254,7 +254,7 @@ A requisição irá retornar uma resposta da seguinte forma:
 ```
 
 - `idWaram`: o id presente na url ('?p=244486')
-- `sessao`: a sessão da página, valores possíveis --> "acesso-rapido", "servicos", "noticias", "saiba-mais", "banners", "carrosseis", "cards" ou "cards-heading"
+- `secao`: a seção da página, valores possíveis --> "acesso-rapido", "servicos", "noticias", "saiba-mais", "banners", "carrosseis", "videos", "cards" ou "cards-heading"
 - `titulo`: o titulo do conteúdo
 - `descricao`: a descrição do conteúdo
 - `urlImg`: a url da imagem

@@ -16,7 +16,7 @@ type Carousel = {
 
 type Data = {
   idWaram: string
-  sessao: string
+  secao: string
   titulo: string
   descricao: string
   urlImg: string
@@ -68,7 +68,7 @@ export async function getCarrossel(url: string, shouldSendHomeData = false) {
 
       const data = {
         idWaram: id,
-        sessao: "carrosseis",
+        secao: "carrosseis",
         titulo: h2Text,
         descricao: pText,
         urlImg: imgSrc,
@@ -79,7 +79,7 @@ export async function getCarrossel(url: string, shouldSendHomeData = false) {
         tipoLink: categorizeUrl(href),
       }
 
-      const query = `${data.idWaram}; ${data.sessao}; ${data.titulo}; ${data.descricao}; ${data.urlImg}; ${data.altImg}; ${data.path}; ${data.isLinkExterno}; ${data.link}; ${data.tipoLink};`
+      const query = `${data.idWaram}; ${data.secao}; ${data.titulo}; ${data.descricao}; ${data.urlImg}; ${data.altImg}; ${data.path}; ${data.isLinkExterno}; ${data.link}; ${data.tipoLink};`
 
       if (shouldSendHomeData) {
         carousel.push(data)

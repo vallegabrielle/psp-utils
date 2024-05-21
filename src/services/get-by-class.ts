@@ -6,7 +6,7 @@ import { isAbsoluteUrl } from "@/utils/is-absolute-url"
 
 type Data = {
   idWaram: string
-  sessao: string
+  secao: string
   titulo: string
   descricao: string
   urlImg: string
@@ -64,11 +64,15 @@ export async function getByClass(
       let linkFinal = href
       if (src !== "") linkFinal = src
 
-      const categoria = heading.toLowerCase().replace(" ", "-")
+      const categoria = heading
+        .toLowerCase()
+        .replace(" ", "-")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
 
       const data = {
         idWaram: id,
-        sessao: categoria,
+        secao: categoria,
         titulo: title,
         descricao: description,
         urlImg: imgSrc,
@@ -79,7 +83,7 @@ export async function getByClass(
         tipoLink: categorizeUrl(linkFinal),
       }
 
-      const str = `${data.idWaram}; ${data.sessao}; ${data.titulo}; ${data.descricao}; ${data.urlImg}; ${data.altImg}; ${data.path}; ${data.isLinkExterno}; ${data.link}; ${data.tipoLink};`
+      const str = `${data.idWaram}; ${data.secao}; ${data.titulo}; ${data.descricao}; ${data.urlImg}; ${data.altImg}; ${data.path}; ${data.isLinkExterno}; ${data.link}; ${data.tipoLink};`
 
       if (shouldSendJSON) {
         links.push(data)

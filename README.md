@@ -231,22 +231,22 @@ A requisição irá retornar uma resposta da seguinte forma:
 
 Fazer uma requisição GET para `localhost:3000/get-home-data`
 
-O serviço varre as páginas listadas no arquivo `src/files/txt/urls-da-secretaria.txt`
+O serviço varre as páginas listadas no arquivo `src/files/txt/urls-da-secretaria.txt`, inclua aqui as urls que deseja listar as informações (1 url por linha)
 
 A requisição irá retornar uma resposta da seguinte forma:
 
 ```bash
 [
-     {
-        "idWaram": "273172",
-        "sessao": "acesso-rapido",
-        "titulo": "- Lista referente à entrega das órteses suropodálicas das pessoas que aguardavam em fila ( 2ª etapa do acordo judicial)- Doações: Coronavírus (Covid-19)- Biblioteca Virtual de Saúde- Convite à manifestação de interesse em serviços de gerenciamento de projeto - Avança Saúde SP",
-        "descricao": "",
-        "urlImg": "",
-        "altImg": "",
-        "path": "saude/",
+    {
+        "idWaram": "",
+        "sessao": "cards-heading",
+        "titulo": "Acesso à Informação",
+        "descricao": "Esta seção reúne e divulga, de forma espontânea, dados da Casa Civil do Gabinete do Prefeito que são de interesse coletivo ou geral com o objetivo de facilitar o acesso à informação pública, conforme determinação da Lei Federal nº 12.527, de 18/11/2011 (LAI), e o Decreto Municipal nº 53.623/2012. Na Casa Civil do Gabinete do Prefeito a autoridade de monitoramento da LAI pode ser contatada no endereço eletrônico: casacivil@prefeitura.sp.gov.br. Informações adicionais podem ser obtidas no Portal da Transparência.",
+        "urlImg": "https://www.prefeitura.sp.gov.br/cidade/secretarias/upload/chamadas/acesso_informacao_1510324640.png",
+        "altImg": "Imagem com um balão e uma letra i dentro, onde o fundo é a cidade. Está escrito do lado inferior esquerdo Acesso à informação.",
+        "path": "casa_civil/acesso_a_informacao/",
         "isLinkExterno": false,
-        "link": "https://www.prefeitura.sp.gov.br/cidade/secretarias/saude/atencao_basica/pessoa_com_deficiencia/index.php?p=273172",
+        "link": "",
         "tipoLink": "link"
     },
     ...

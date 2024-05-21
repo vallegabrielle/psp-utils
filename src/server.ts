@@ -5,6 +5,7 @@ import * as fs from "fs"
 import * as cards from "@/json/cards.json"
 import * as sites from "@/json/sites.json"
 import { createSiteDataFile } from "@/services/create-site-data-file"
+import { findCarrossel } from "@/services/find-carrossel"
 import { findHeading } from "@/services/find-heading"
 import { findInAPage } from "@/services/find-in-a-page"
 import { getByClass } from "@/services/get-by-class"
@@ -13,7 +14,6 @@ import { getCarrossel } from "@/services/get-carrossel"
 import { getHeadingContent } from "@/services/get-heading-content"
 import { getSecretarias } from "@/services/get-secretarias"
 import { getServicos } from "@/services/get-servicos"
-import { hasCarrossel } from "@/services/has-carrossel"
 import { uploadImages } from "@/services/upload-images"
 import { readUrlsFromFile } from "@/utils/read-urls-from-file"
 
@@ -54,31 +54,32 @@ app.get("/has-carrossel", async (req: Request, res: Response) => {
     const targetDivPrefeitura = "#carouselContent"
     const targetDivAtual = ".lfr-layout-structure-item-itens-de-carrossel"
 
-    const checkArr = []
+    const carrosselData = []
     for (const [i, site] of sites.entries()) {
-      const current = i + 1
+      const id = i + 1
 
-      console.log(current, "/", sites.length)
-      const temCarrosselNaPrefeitura = await hasCarrossel(
+      const temCarrosselNaPrefeitura = await findCarrossel(
         site.urlPrefeitura,
         targetDivPrefeitura
       )
-      const temCarrosselNoAtual = await hasCarrossel(
+      const temCarrosselNoAtual = await findCarrossel(
         site.urlAtual,
         targetDivAtual
       )
 
-      checkArr.push({
-        id: current,
+      carrosselData.push({
+        id,
         infoDaPagina: `${site.site} - ${site.pagina}`,
         temCarrosselNaPrefeitura,
         temCarrosselNoAtual,
         temNaPrefeituraMasNaoTemNoAtual:
           temCarrosselNaPrefeitura && !temCarrosselNoAtual,
       })
+
+      console.log(`${id}/${sites.length}`)
     }
 
-    res.send(checkArr)
+    res.send(carrosselData)
   } catch (error) {
     res.status(500).send(error)
   }
@@ -123,8 +124,6 @@ app.post("/upload-carrossel-images", async (req: Request, res: Response) => {
 
     await uploadImages(imageSources, parentFolderId, login, password)
 
-    console.log("Images uploaded successfully")
-
     res.send("Images uploaded successfully")
   } catch (error) {
     res.status(500).send(error)
@@ -146,8 +145,6 @@ app.post("/upload-servicos-images", async (req: Request, res: Response) => {
 
     await uploadImages(imageSources, parentFolderId, login, password)
 
-    console.log("Images uploaded successfully")
-
     res.send("Images uploaded successfully")
   } catch (error) {
     res.status(500).send(error)
@@ -156,26 +153,24 @@ app.post("/upload-servicos-images", async (req: Request, res: Response) => {
 
 app.post("/create-cards-queries-file", async (req: Request, res: Response) => {
   try {
-    const queriesArr: (string | undefined)[] = []
+    const queries: (string | undefined)[] = []
 
     for (const card of cards) {
       const cardsInfo = await getCardsInfo(card)
 
       if (!cardsInfo) return
 
-      const queries = cardsInfo.map((item) => item.query)
+      const cardsInfoQueries = cardsInfo.map((item) => item.query)
 
-      queriesArr.push(...queries)
+      queries.push(...cardsInfoQueries)
 
       console.log(card, "done")
     }
 
     const filePath = `./queries.txt`
-    const content = queriesArr.join("\n")
+    const content = queries.join("\n")
 
     fs.writeFileSync(filePath, content)
-
-    console.log("File created successfully")
 
     res.send("File created successfully")
   } catch (error) {
@@ -205,16 +200,14 @@ app.post("/create-site-types-file", async (req: Request, res: Response) => {
         const isCard = await findInAPage(url, ".panel-notices")
         const isConteudo = await findInAPage(url, ".post-text")
 
-        const foundData = {
+        sitesData.push({
           url,
           hasCarrossel,
           hasServicos,
           isNoticia,
           isCard,
           isConteudo,
-        }
-
-        sitesData.push(foundData)
+        })
       }
 
       console.log(url, "done")
@@ -228,69 +221,17 @@ app.post("/create-site-types-file", async (req: Request, res: Response) => {
   }
 })
 
-app.post("/create-home-data-file", async (req: Request, res: Response) => {
-  try {
-    const sitesData = []
-
-    const secretariaUrls = await readUrlsFromFile(
-      "./src/files/txt/urls-da-secretaria.txt"
-    )
-
-    if (!secretariaUrls) return
-    let count = 0
-
-    for (const url of secretariaUrls) {
-      const acessoRapido = (await getHeadingContent(url, "ACESSO RÁPIDO")) || []
-      const servicos = (await getHeadingContent(url, "SERVIÇOS")) || []
-      const noticas = (await getHeadingContent(url, "NOTÍCIAS")) || []
-      const saibaMais = (await getHeadingContent(url, "SAIBA MAIS")) || []
-      const banners =
-        (await getByClass(url, "div.thumbnail-aside a", "BANNERS")) || []
-      const videos =
-        (await getByClass(url, "div.embed-responsive iframe", "VÍDEOS")) || []
-      const carrosseisRes = await getCarrossel(url)
-      const carrosseis = carrosseisRes?.map((el) => el.query) || []
-
-      const secretariaData = [
-        ...acessoRapido,
-        ...servicos,
-        ...noticas,
-        ...saibaMais,
-        ...banners,
-        ...videos,
-        ...carrosseis,
-      ]
-
-      sitesData.push(...secretariaData)
-      console.log(`${url} ${count + 1}/${secretariaUrls.length} done`)
-      count++
-    }
-
-    const filePath = `./home-data.txt`
-    const content = sitesData.join("\n")
-
-    fs.writeFileSync(filePath, content)
-
-    console.log(`File ${filePath} created successfully`)
-
-    res.send(sitesData)
-  } catch (error) {
-    res.status(500).send(error)
-  }
-})
-
 app.get("/get-home-data", async (req: Request, res: Response) => {
   try {
-    const sitesData = []
+    const homeData = []
 
     const secretariaUrls = await readUrlsFromFile(
       "./src/files/txt/urls-da-secretaria.txt"
     )
 
     if (!secretariaUrls) return
-    let count = 0
 
-    for (const url of secretariaUrls) {
+    for (const [i, url] of secretariaUrls.entries()) {
       const acessoRapido =
         (await getHeadingContent(url, "ACESSO RÁPIDO", true)) || []
       const servicos = (await getHeadingContent(url, "SERVIÇOS", true)) || []
@@ -315,7 +256,7 @@ app.get("/get-home-data", async (req: Request, res: Response) => {
         (await getByClass(url, "div.media", "topo-de-pagina", true)) || []
       const cards = (await getByClass(url, "a.lnk-panel", "capas", true)) || []
 
-      const secretariaData = [
+      const urlData = [
         ...acessoRapido,
         ...servicos,
         ...noticas,
@@ -327,12 +268,11 @@ app.get("/get-home-data", async (req: Request, res: Response) => {
         ...cards,
       ]
 
-      sitesData.push(...secretariaData)
-      console.log(`${url} ${count + 1}/${secretariaUrls.length} done`)
-      count++
+      homeData.push(...urlData)
+      console.log(`${i + 1}/${secretariaUrls.length} done: ${url}`)
     }
 
-    res.send(sitesData)
+    res.send(homeData)
   } catch (error) {
     res.status(500).send(error)
   }

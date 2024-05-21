@@ -1,7 +1,7 @@
 import axios from "axios"
 import * as cheerio from "cheerio"
 
-export async function hasCarrossel(url: string, target: string) {
+export async function findCarrossel(url: string, target: string) {
   try {
     const res = await axios.get(url)
 
@@ -19,6 +19,6 @@ export async function hasCarrossel(url: string, target: string) {
       return false
     }
   } catch (error) {
-    console.log("Error @ hasCarrossel:", error)
+    console.log("Error @ findCarrossel:", error)
   }
 }

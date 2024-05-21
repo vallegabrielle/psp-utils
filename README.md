@@ -45,8 +45,7 @@ Serviços utilitários para atividades da PSP.
 - [6. Fazer upload das imagens dos carrosséis de uma página](#6-fazer-upload-das-imagens-dos-carrosséis-de-uma-página)
 - [7. Gerar arquivo txt com queries para atualizar informações sobre os cards](#7-gerar-arquivo-txt-com-queries-para-atualizar-informações-sobre-os-cards)
 - [8. Gerar arquivo txt com os tipos de cada site de uma secretaria](#8-gerar-arquivo-txt-com-os-tipos-de-cada-site-de-uma-secretaria)
-- [9. Gerar arquivo txt com informações sobre serviços, notícias e acesso rápido de uma secretaria](#9-gerar-arquivo-txt-com-informações-sobre-serviços-notícias-e-acesso-rápido-de-uma-secretaria)
-- [10. Listar informações sobre serviços, notícias e acesso rápido de uma secretaria](#10-listar-informações-sobre-serviços-notícias-e-acesso-rápido-de-uma-secretaria)
+- [9. Listar informações sobre serviços, notícias e acesso rápido de uma secretaria](#9-listar-informações-sobre-serviços-notícias-e-acesso-rápido-de-uma-secretaria)
 
 ### 1. Listagem de serviços por secretaria
 
@@ -203,31 +202,7 @@ A requisição irá retornar uma resposta da seguinte forma:
 
 Um arquivo com todos os tipos será criado em `./secretaria-site-types.txt`
 
-### 9. Gerar arquivo txt com informações sobre serviços, notícias e acesso rápido de uma secretaria
-
-Fazer uma requisição POST para `localhost:3000/create-home-data-file`
-
-O serviço varre as páginas listadas no arquivo `src/files/txt/urls-da-secretaria.txt`
-
-A requisição irá retornar uma resposta da seguinte forma:
-
-```bash
-[
-    "343648; serviços; mobilidade/; false; ;",
-    "348172; serviços; mobilidade/; false; ;",
-    "; serviços; mobilidade/; true; https://meuveiculo.prefeitura.sp.gov.br;",
-    "; serviços; mobilidade/; false; ;",
-    "315674; serviços; mobilidade/; false; ;",
-    "; serviços; mobilidade/; true; http://mobilidadesegura.prefeitura.sp.gov.br/;",
-    "; serviços; mobilidade/; false; ;",
-    "346780; notícias; mobilidade/; false; ;",
-    "326366; notícias; mobilidade/; false; ;",
-    "316531; notícias; mobilidade/; false; ;",
-    ...
-]
-```
-
-### 10. Listar informações sobre serviços, notícias e acesso rápido de uma secretaria
+### 9. Listar informações sobre serviços, notícias e acesso rápido de uma secretaria
 
 Fazer uma requisição GET para `localhost:3000/get-home-data`
 

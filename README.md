@@ -248,7 +248,7 @@ A requisição irá retornar uma resposta da seguinte forma:
 ]
 ```
 
-- `sessao`: "acesso-rapido", "servicos", "noticias", "saiba-mais", "banners", "cards" ou "cards-heading"
+- `sessao`: "acesso-rapido", "servicos", "noticias", "saiba-mais", "banners", "carrosseis", "cards" ou "cards-heading"
 - `tipoLink`: "imagem", "documento" ou "link"
 
 ## Contribuição

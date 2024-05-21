@@ -4,6 +4,11 @@
 
 Serviços utilitários para atividades da PSP.
 
+## Pré-requisitos
+
+- [Node.js](https://nodejs.org/en/download/package-manager/current) (preferencialmente v18.20.2+)
+- [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/#debian-stable) (preferencialmente v1.22.19+)
+
 ## Instalação
 
 1. Clone este repositório:

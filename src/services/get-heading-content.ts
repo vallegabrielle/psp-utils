@@ -40,10 +40,10 @@ export async function getHeadingContent(
         .find("a")
         .each((_, anchor) => {
           const href = $(anchor).attr("href") || ""
-          const imgSrc = $(element).find("img").attr("src") || ""
-          const imgAlt = $(element).find("img").attr("alt") || ""
-          const title = $(element).find("h3").text().trim()
-          const description = $(element).find("p").text().trim()
+          const imgSrc = $(anchor).find("img").attr("src") || ""
+          const imgAlt = $(anchor).find("img").attr("alt") || ""
+          const title = $(anchor).find("h3").text().trim()
+          const description = $(anchor).find("p").text().trim()
 
           const linkExterno =
             isAbsoluteUrl(href) && !href.includes("www.prefeitura.sp.gov.br")

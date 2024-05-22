@@ -228,16 +228,20 @@ A requisição irá retornar uma resposta da seguinte forma:
 ]
 ```
 
-- `idWaram`: o id presente na url ('?p=244486')
-- `secao`: a seção da página, valores possíveis --> "acesso-rapido", "servicos", "noticias", "saiba-mais", "imagens-em-destaque", "carrossel", "videos", "capas" ou "topo-de-pagina"
-- `titulo`: o titulo do conteúdo
-- `descricao`: a descrição do conteúdo
-- `urlImg`: a url da imagem
-- `altImg`: o alt da imagem
-- `path`: o caminho referente ao conteúdo, extraído da url da página
+- `idWaram`: id presente na url
+- `secao`: seção da página
+  - valores possíveis: `acesso-rapido`, `servicos`, `noticias`, `saiba-mais`, `imagens-em-destaque`, `carrossel`, `videos`, `capas` ou `topo-de-pagina`
+- `titulo`: título do conteúdo
+- `descricao`: descrição do conteúdo
+- `urlImg`: url da imagem
+- `altImg`: alt da imagem
+- `path`: caminho referente ao conteúdo, extraído da url da página
 - `isLinkExterno`: boolean indicando se é ou não um link externo
-- `link`: o link do conteúdo
-- `tipoLink`: o tipo do link do conteúdo, valores possíveis --> "imagem", "documento" ou "link"
+- `link`: link do conteúdo
+- `tipoLink`: tipo do link do conteúdo
+  - valores possíveis: `imagem`, `documento` ou `link`
+
+Caso alguma key não encontre um resultado, o serviço enviará uma string vazia (`""`) como value.
 
 ## Contribuição
 

@@ -1,7 +1,7 @@
 async function getFile(url: string) {
   const file = await fetch(url.replace("http://", "https://"))
-  const fileBLOB = await file.blob()
-  return fileBLOB
+  const fileBlob = await file.blob()
+  return fileBlob
 }
 
 async function postFile(
@@ -13,18 +13,17 @@ async function postFile(
   const formData = new FormData()
   formData.append("file", file, "img_" + Math.random())
 
-  const response = await fetch(
-    `https://webserver-prefeiturasp-prd.lfr.cloud/o/headless-delivery/v1.0/document-folders/${parentFolderId}/documents`,
-    {
-      headers: {
-        Authorization: "Basic " + btoa(`${login}:${password}`),
-      },
-      method: "POST",
-      body: formData,
-    }
-  )
-  const data = await response.json()
-  return data
+  const uploadInDocumentFoldersUrl = `https://webserver-prefeiturasp-prd.lfr.cloud/o/headless-delivery/v1.0/document-folders/${parentFolderId}/documents`
+
+  const postFile = await fetch(uploadInDocumentFoldersUrl, {
+    headers: {
+      Authorization: "Basic " + btoa(`${login}:${password}`),
+    },
+    method: "POST",
+    body: formData,
+  })
+  const postFileData = await postFile.json()
+  return postFileData
 }
 
 export async function uploadImages(
@@ -40,10 +39,10 @@ export async function uploadImages(
 
     if (file === "") continue
 
-    const fileBLOB = await getFile(file)
+    const fileBlob = await getFile(file)
 
-    if (fileBLOB) {
-      await postFile(fileBLOB, parentFolderId, login, password)
+    if (fileBlob) {
+      await postFile(fileBlob, parentFolderId, login, password)
     }
   }
 }

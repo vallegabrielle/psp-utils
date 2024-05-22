@@ -66,7 +66,7 @@ export async function getCarrossel(url: string, shouldSendHomeData = false) {
       const linkExterno =
         isAbsoluteUrl(href) && !href.includes("www.prefeitura.sp.gov.br")
 
-      const data = {
+      const carouselData = {
         idWaram: id,
         secao: "carrossel",
         titulo: h2Text,
@@ -79,10 +79,10 @@ export async function getCarrossel(url: string, shouldSendHomeData = false) {
         tipoLink: categorizeUrl(href),
       }
 
-      const query = `${data.idWaram}; ${data.secao}; ${data.titulo}; ${data.descricao}; ${data.urlImg}; ${data.altImg}; ${data.path}; ${data.isLinkExterno}; ${data.link}; ${data.tipoLink};`
+      const query = `${carouselData.idWaram}; ${carouselData.secao}; ${carouselData.titulo}; ${carouselData.descricao}; ${carouselData.urlImg}; ${carouselData.altImg}; ${carouselData.path}; ${carouselData.isLinkExterno}; ${carouselData.link}; ${carouselData.tipoLink};`
 
       if (shouldSendHomeData) {
-        carousel.push(data)
+        carousel.push(carouselData)
       } else {
         carousel.push({
           id: index + 1,

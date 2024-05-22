@@ -1,5 +1,6 @@
 import axios from "axios"
 import * as cheerio from "cheerio"
+
 import { Servicos } from "@/services/get-servicos"
 
 type Secretarias = {

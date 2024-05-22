@@ -30,12 +30,12 @@ export async function getHeadingContent(
     const html = res.data
     const $ = cheerio.load(html)
 
-    const divsWithASD = $(`div > div > h2:contains(${heading})`)
+    const divsWithHeading = $(`div > div > h2:contains(${heading})`)
       .parent()
       .parent()
 
-    const links: (string | Data)[] = []
-    divsWithASD.each((index, element) => {
+    const headingContent: (string | Data)[] = []
+    divsWithHeading.each((index, element) => {
       $(element)
         .find("a")
         .each((_, anchor) => {
@@ -64,7 +64,7 @@ export async function getHeadingContent(
             .normalize("NFD")
             .replace(/[\u0300-\u036f]/g, "")
 
-          const data = {
+          const headingContentData = {
             idWaram: id,
             secao: categoria,
             titulo: title,
@@ -77,21 +77,21 @@ export async function getHeadingContent(
             tipoLink: categorizeUrl(href),
           }
 
-          const query = `${data.idWaram}; ${data.secao}; ${data.titulo}; ${data.descricao}; ${data.urlImg}; ${data.altImg}; ${data.path}; ${data.isLinkExterno}; ${data.link}; ${data.tipoLink};`
+          const query = `${headingContentData.idWaram}; ${headingContentData.secao}; ${headingContentData.titulo}; ${headingContentData.descricao}; ${headingContentData.urlImg}; ${headingContentData.altImg}; ${headingContentData.path}; ${headingContentData.isLinkExterno}; ${headingContentData.link}; ${headingContentData.tipoLink};`
 
           if (shouldSendJSON) {
-            links.push(data)
+            headingContent.push(headingContentData)
           } else {
-            links.push(query)
+            headingContent.push(query)
           }
         })
     })
 
     if (heading === "NOTÍCIAS") {
-      links.splice(-1)
+      headingContent.splice(-1)
     }
 
-    return links
+    return headingContent
   } catch (error) {
     console.log("Error @ getHeadingContent", error)
   }

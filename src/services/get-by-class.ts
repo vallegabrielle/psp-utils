@@ -38,7 +38,7 @@ export async function getByClass(
       titleHeading = "h2"
     }
 
-    const links: (string | Data)[] = []
+    const elementsData: (string | Data)[] = []
     divsWithClass.each((index, element) => {
       const href = $(element).attr("href") || ""
       const src = $(element).attr("src") || ""
@@ -70,7 +70,7 @@ export async function getByClass(
         .normalize("NFD")
         .replace(/[\u0300-\u036f]/g, "")
 
-      const data = {
+      const elementData = {
         idWaram: id,
         secao: categoria,
         titulo: title,
@@ -83,16 +83,16 @@ export async function getByClass(
         tipoLink: categorizeUrl(linkFinal),
       }
 
-      const str = `${data.idWaram}; ${data.secao}; ${data.titulo}; ${data.descricao}; ${data.urlImg}; ${data.altImg}; ${data.path}; ${data.isLinkExterno}; ${data.link}; ${data.tipoLink};`
+      const query = `${elementData.idWaram}; ${elementData.secao}; ${elementData.titulo}; ${elementData.descricao}; ${elementData.urlImg}; ${elementData.altImg}; ${elementData.path}; ${elementData.isLinkExterno}; ${elementData.link}; ${elementData.tipoLink};`
 
       if (shouldSendJSON) {
-        links.push(data)
+        elementsData.push(elementData)
       } else {
-        links.push(str)
+        elementsData.push(query)
       }
     })
 
-    return links
+    return elementsData
   } catch (error) {
     console.log("Error @ getByClass:", error)
   }

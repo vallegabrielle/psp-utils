@@ -59,7 +59,13 @@ export async function getByClass(
       }
 
       let id = ""
-      if (href.includes("p=")) id = href.split("p=")[1]
+      if (href.includes("p=")) {
+        id = href.split("p=")[1]
+      }
+
+      if (id.includes("#")) {
+        id = id.split("#")[0]
+      }
 
       let linkFinal = href
       if (src !== "") linkFinal = src

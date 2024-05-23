@@ -34,7 +34,7 @@ export async function getByClass(
     const divsWithClass = $(`${className}`)
 
     let titleHeading = "h3"
-    if (heading === "cards-heading" || heading === "cards") {
+    if (heading === "topo-de-pagina" || heading === "capas") {
       titleHeading = "h2"
     }
 

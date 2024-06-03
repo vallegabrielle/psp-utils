@@ -47,11 +47,13 @@ export async function getCarrossel(url: string, shouldSendHomeData = false) {
     const carousel: (Carousel | Data)[] = []
 
     $carouselContent(".item").each((index, element) => {
-      const href = $(element).find("a").attr("href") || ""
+      const anchor = $(element).find("a") || ""
+      const href = anchor.attr("href") || ""
       const imgSrc = $(element).find("img").attr("src") || ""
       const imgAlt = $(element).find("img").attr("alt") || ""
       const h2Text = $(element).find("h2").text().trim()
       const pText = $(element).find("p").text().trim()
+      const hasCarouselCaption = anchor.find("div").hasClass("carousel-caption");
 
       let id = ""
       if (href.includes("p=")) id = href.split("p=")[1]
@@ -69,8 +71,8 @@ export async function getCarrossel(url: string, shouldSendHomeData = false) {
       const carouselData = {
         idWaram: id,
         secao: "carrossel",
-        titulo: h2Text,
-        descricao: pText,
+        titulo: hasCarouselCaption ? h2Text : "",
+        descricao: hasCarouselCaption ? pText : "",
         urlImg: imgSrc,
         altImg: imgAlt,
         path: urlPath,

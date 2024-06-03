@@ -41,7 +41,8 @@ export async function getByClass(
     const elementsData: (string | Data)[] = []
     divsWithClass.each((index, element) => {
       const href = $(element).attr("href") || ""
-      const src = $(element).attr("src") || ""
+      const src = $(element).attr("src") || $(element).find("source").attr("src") || ""
+      const poster = $(element).attr("poster") || ""
       const imgSrc = $(element).find("img").attr("src") || ""
       const imgAlt = $(element).find("img").attr("alt") || ""
       const title = $(element).find(titleHeading).text().trim()
@@ -68,7 +69,10 @@ export async function getByClass(
       }
 
       let linkFinal = href
+      let imgSrcFinal = imgSrc
+
       if (src !== "") linkFinal = src
+      if (poster !== "") imgSrcFinal = poster
 
       const categoria = heading
         .toLowerCase()
@@ -81,7 +85,7 @@ export async function getByClass(
         secao: categoria,
         titulo: title,
         descricao: description,
-        urlImg: imgSrc,
+        urlImg: imgSrcFinal,
         altImg: imgAlt,
         path: urlPath,
         isLinkExterno: linkExterno,

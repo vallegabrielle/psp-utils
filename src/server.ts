@@ -247,7 +247,7 @@ app.get("/get-home-data", async (req: Request, res: Response) => {
       const videos =
         (await getByClass(
           url,
-          "div.embed-responsive iframe",
+          "div.embed-responsive iframe, div.embed-responsive video",
           "videos",
           true
         )) || []
